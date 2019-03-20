@@ -29,6 +29,14 @@ def drawBlankTask(win):
 		lineWidth = 5)
 	key_hist.draw()
 
+	key_divide = visual.Line(
+		win = win,
+		start = [0, -287.5],
+		end = [0, -212.5],
+		lineColor = [-1, -1, -1],
+		lineWidth = 5)
+	key_divide.draw()
+
 def drawGear(win):
 	"""Draws the gear stimulus."""
 	gear = visual.ImageStim(
@@ -99,3 +107,24 @@ def pointCounter(win, points):
 		color = [-1, -1, -1],
 		bold = True)
 	scoreText.draw()
+
+def showKeys(win, keys):
+	"""Will display all entries of keys (list of chars) in the 
+	key stroke box. Assumes first entry of keys was first key 
+	pressed in the trial."""
+	keyStims = []
+	for key in keys:
+		#create the text
+		keyText = visual.TextStim(
+			win = win,
+			text = key.upper(),
+			pos = [-95, -250],
+			color = [-1, -1, -1])
+		#move all other text to right
+		for keyStim in keyStims:
+			keyStim.pos[0] += 60
+		#add key to the list
+		keyStims.append(keyText)
+
+	for keyText in keyStims:
+		keyText.draw()

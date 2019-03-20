@@ -1,54 +1,187 @@
-
 from psychopy import visual, event
 
 from taskHelpers import *
 
+#TASK SWITCHES
+FULL_SCREEN = True
+WINDOW_SIZE = [1400, 800] #if not full screen, will use this window size
+
+#Helpers for printing tutorial text:
+def instructionsScreen(win):
+	"""Shows the instruction screen for the start
+	of the trial."""
+	header = visual.TextStim(
+		win = win,
+		text = "Instructions",
+		pos = [0, 250],
+		color = [-1, -1, -1],
+		height = 50)
+	header.draw()
+
+	firstBulletText = "Your objective is to as earn as many points as possible by unlocking stars. Stars are unlocked using a machine which is controlled by the D, F, J, and K keys. Each star is unlocked by a unique sequence of four key presses."
+
+	firstBullet = visual.TextStim(
+		win = win,
+		text = firstBulletText,
+		pos = [0, 75],
+		color = [-1, -1, -1],
+		height = 25)
+	firstBullet.draw()
+
+	secondBulletText = "The machine’s inner workings will sometimes be visible to you, and you should use this information to help you unlock more stars."
+	secondBullet = visual.TextStim(
+		win = win,
+		text = secondBulletText,
+		pos = [0, -100],
+		color = [-1, -1, -1],
+		height = 25)
+	secondBullet.draw()
+
+	pressKeyText = "Press any key to begin!"
+	pressKey = visual.TextStim(
+		win = win,
+		text = pressKeyText,
+		pos = [0, -200],
+		color = [-1, -1, -1],
+		height = 25)
+	pressKey.draw()
+
+def tutorial1Text(win):
+	"""Shows the text instructions for the first screen
+	of the tutorial."""
+	text = "To start, try pressing the D key."
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [-500, 0],
+		color = [-1, -1, -1],
+		height = 30,
+		wrapWidth = 275)
+	textStim.draw()
+
+def tutorial2Text(win):
+	"""Shows the text instructions for the second screen
+	of the tutorial."""
+	text = "Nothing has happened yet, but remember that you need to use sequences of actions to unlock items. \n\n Try pressing K."
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [-500, 0],
+		color = [-1, -1, -1],
+		height = 30,
+		wrapWidth = 350)
+	textStim.draw()
+
+def tutorial3Text(win):
+	"""Shows the text instructions for the third screen
+	of the tutorial."""
+	text = "You’ve made a gear appear with the key combination DK! The machine will use these packages to create stars. \n \n Now try pressing J"
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [-500, 0],
+		color = [-1, -1, -1],
+		height = 30,
+		wrapWidth = 350)
+	textStim.draw()
+
+def tutorial4Text(win):
+	"""Shows the text instructions for the fourth screen
+	of the tutorial."""
+	text = "Now try pressing F."
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [-500, 0],
+		color = [-1, -1, -1],
+		height = 30,
+		wrapWidth = 350)
+	textStim.draw()
+
+def tutorial5Text(win):
+	"""Shows the text instructions for the fifth screen
+	of the tutorial."""
+	text = "You’ve made a star appear to earn 100 points! \n \n Notice that a star is unlocked when you form some sequence of the machine's components."
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [-500, 0],
+		color = [-1, -1, -1],
+		height = 30,
+		wrapWidth = 350)
+	textStim.draw()
+
+def readyToPlayScreen(win):
+	"""Shows the last screen of the tutorial phase,
+	asking participants if they are reading to begin."""
+	text = "Press any key when you're ready to start the game!"
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [0, 0],
+		color = [-1, -1, -1],
+		height = 40)
+	textStim.draw()
+
+def runTutorial(win):
+	instructionsScreen(win)
+	win.flip()
+	event.waitKeys()
+
+	drawBlankTask(win)
+	highlightBlackStar(win)
+	pointCounter(win, 0)
+	tutorial1Text(win)
+	win.flip()
+	event.waitKeys(keyList = ["d"])
+
+	drawBlankTask(win)
+	highlightBlackStar(win)
+	pointCounter(win, 0)
+	showKeys(win, ["d"])
+	tutorial2Text(win)
+	win.flip()
+	event.waitKeys(keyList = ["k"])
+
+	drawBlankTask(win)
+	highlightBlackStar(win)
+	drawGear(win)
+	pointCounter(win, 0)
+	showKeys(win, ["d", "k"])
+	tutorial3Text(win)
+	win.flip()
+	event.waitKeys(keyList = ["j"])
+
+	drawBlankTask(win)
+	highlightBlackStar(win)
+	drawGear(win)
+	pointCounter(win, 0)
+	showKeys(win, ["d", "k", "j"])
+	tutorial4Text(win)
+	win.flip()
+	event.waitKeys(keyList = ["f"])
+
+
+	drawBlankTask(win)
+	unlockBlackStar(win)
+	drawGear(win)
+	drawLight(win)
+	pointCounter(win, 100)
+	showKeys(win, ["d", "k", "j", "f"])
+	tutorial5Text(win)
+	win.flip()
+	event.waitKeys()
+
+	readyToPlayScreen(win)
+	win.flip()
+	event.waitKeys()
+
 win = visual.Window(
-	size = [800, 800],
-	fullscr = False,
+	size = WINDOW_SIZE,
+	fullscr = FULL_SCREEN, 
 	color = [1, 1, 1],
 	units = "pix")
 
-drawBlankTask(win)
-highlightBlackStar(win)
-pointCounter(win, 0)
-win.flip()
-event.waitKeys(keyList = ["d"])
-
-drawBlankTask(win)
-highlightBlackStar(win)
-pointCounter(win, 0)
-win.flip()
-event.waitKeys(keyList = ["k"])
-
-drawBlankTask(win)
-highlightBlackStar(win)
-drawGear(win)
-pointCounter(win, 0)
-win.flip()
-event.waitKeys(keyList = ["j"])
-
-drawBlankTask(win)
-highlightBlackStar(win)
-drawGear(win)
-pointCounter(win, 0)
-win.flip()
-event.waitKeys(keyList = ["f"])
-
-
-drawBlankTask(win)
-unlockBlackStar(win)
-drawGear(win)
-drawLight(win)
-pointCounter(win, 100)
-win.flip()
-event.waitKeys()
+runTutorial(win)
 
 win.close()
-
-def runTutorial(win):
-	"""
-	Will eventually put body of file here so I can run the tutorial
-	from some other script.
-	"""
-	return None
