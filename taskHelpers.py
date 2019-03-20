@@ -1,4 +1,4 @@
-from psychopy import visual
+from psychopy import visual, event
 
 def drawBlankTask(win):
 	"""Draws a blank template for a trial. This includes drawing
@@ -19,7 +19,7 @@ def drawBlankTask(win):
 		image = "assets/orange-star.jpg",
 		pos = [75, 300])
 	orange_star.draw()
-
+	
 	key_hist = visual.Rect(
 		win = win,
 		width = 250,
@@ -58,3 +58,44 @@ def highlightOrangeStar(win):
 		lineColor = [-1, -1, -1],
 		lineWidth = 5)
 	highlightBox.draw()
+	return highlightBox
+
+def unlockOrangeStar(win):
+	"""Draws a box around the orange star and fills it
+	green to indicate it has been unlocked."""
+	highlightBox = highlightOrangeStar(win)
+	highlightBox.fillColor = [-1, 1, -1]
+	highlightBox.opacity = .3
+	highlightBox.draw()
+
+def highlightBlackStar(win):
+	"""Draws a box around the black star to indicate
+	the particpant should try to unlock that star."""
+	highlightBox = visual.Rect(
+		win = win,
+		width = 110,
+		height = 110,
+		pos = [-72, 300],
+		lineColor = [-1, -1, -1],
+		lineWidth = 5)
+	highlightBox.draw()
+	return highlightBox
+
+def unlockBlackStar(win):
+	"""Draws a box around the black star and fills it
+	green to indicate it has been unlocked."""
+	highlightBox = highlightBlackStar(win)
+	highlightBox.fillColor = [-1, 1, -1]
+	highlightBox.opacity = .3
+	highlightBox.draw()
+
+def pointCounter(win, points):
+	"""Draws a point counter for the given number of 
+	points."""
+	scoreText = visual.TextStim(
+		win = win,
+		text = "Points: " + str(points),
+		pos = [0, 200],
+		color = [-1, -1, -1],
+		bold = True)
+	scoreText.draw()

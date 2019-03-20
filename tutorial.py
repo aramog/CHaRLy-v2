@@ -1,3 +1,4 @@
+
 from psychopy import visual, event
 
 from taskHelpers import *
@@ -9,35 +10,45 @@ win = visual.Window(
 	units = "pix")
 
 drawBlankTask(win)
-highlightOrangeStar(win)
+highlightBlackStar(win)
+pointCounter(win, 0)
 win.flip()
-event.waitKeys()
+event.waitKeys(keyList = ["d"])
 
 drawBlankTask(win)
-highlightOrangeStar(win)
+highlightBlackStar(win)
+pointCounter(win, 0)
 win.flip()
-event.waitKeys()
+event.waitKeys(keyList = ["k"])
 
 drawBlankTask(win)
-highlightOrangeStar(win)
+highlightBlackStar(win)
 drawGear(win)
+pointCounter(win, 0)
 win.flip()
-event.waitKeys()
-
+event.waitKeys(keyList = ["j"])
 
 drawBlankTask(win)
-highlightOrangeStar(win)
+highlightBlackStar(win)
 drawGear(win)
+pointCounter(win, 0)
 win.flip()
-event.waitKeys()
+event.waitKeys(keyList = ["f"])
 
 
 drawBlankTask(win)
-highlightOrangeStar(win)
+unlockBlackStar(win)
 drawGear(win)
 drawLight(win)
+pointCounter(win, 100)
 win.flip()
 event.waitKeys()
 
 win.close()
 
+def runTutorial(win):
+	"""
+	Will eventually put body of file here so I can run the tutorial
+	from some other script.
+	"""
+	return None
