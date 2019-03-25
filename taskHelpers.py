@@ -113,18 +113,24 @@ def showKeys(win, keys):
 	key stroke box. Assumes first entry of keys was first key 
 	pressed in the trial."""
 	keyStims = []
-	for key in keys:
+	for i in range(len(keys)):
 		#create the text
 		keyText = visual.TextStim(
 			win = win,
-			text = key.upper(),
-			pos = [-95, -250],
+			text = keys[i].upper(),
+			pos = [-95 + i*60, -250],
 			color = [-1, -1, -1])
-		#move all other text to right
-		for keyStim in keyStims:
-			keyStim.pos[0] += 60
 		#add key to the list
 		keyStims.append(keyText)
 
 	for keyText in keyStims:
 		keyText.draw()
+
+def getKeys():
+	keyMap = {"d": 1, "f": 2, "j": 3, "k": 4}
+	keys = event.waitKeys()
+		if (len(keys) > 1):
+			raise Exception("Don't press more than 1 key at a time!")
+		if (keys[0] in keyMap):
+			return keyMap[keys[0]]
+		return -1

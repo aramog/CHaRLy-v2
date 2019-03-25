@@ -23,25 +23,34 @@ def instructionsScreen(win):
 	firstBullet = visual.TextStim(
 		win = win,
 		text = firstBulletText,
-		pos = [0, 75],
+		pos = [0, 125],
 		color = [-1, -1, -1],
-		height = 25)
+		height = 20)
 	firstBullet.draw()
 
 	secondBulletText = "The machine’s inner workings will sometimes be visible to you, and you should use this information to help you unlock more stars."
 	secondBullet = visual.TextStim(
 		win = win,
 		text = secondBulletText,
-		pos = [0, -100],
+		pos = [0, -25],
 		color = [-1, -1, -1],
-		height = 25)
+		height = 20)
 	secondBullet.draw()
+
+	thirdBulletText = "Every trial, we will highlight the star you should try to unlock. Only this star will give you points. You can still unlock the other star, but you won't earn any points."
+	thirdBullet = visual.TextStim(
+		win = win,
+		text = thirdBulletText,
+		pos = [0, -150],
+		color = [-1, -1, -1],
+		height = 20)
+	thirdBullet.draw()
 
 	pressKeyText = "Press any key to begin!"
 	pressKey = visual.TextStim(
 		win = win,
 		text = pressKeyText,
-		pos = [0, -200],
+		pos = [0, -250],
 		color = [-1, -1, -1],
 		height = 25)
 	pressKey.draw()
@@ -75,7 +84,7 @@ def tutorial2Text(win):
 def tutorial3Text(win):
 	"""Shows the text instructions for the third screen
 	of the tutorial."""
-	text = "You’ve made a gear appear with the key combination DK! The machine will use these packages to create stars. \n \n Now try pressing J"
+	text = "You’ve made a gear appear with the key combination DK! The machine will use these parts to create stars. \n \n Now try pressing J"
 	textStim = visual.TextStim(
 		win = win,
 		text = text,
