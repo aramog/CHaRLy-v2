@@ -14,51 +14,56 @@ class Block:
 
 		def runTrial(self):
 			keyHist = []
-			
-			#first key press
-			drawBlankTask(self.block.win)
-			if (self.star == 1):
-				highlightBlackStar(self.block.win)
-			else:
-				highlightOrangeStar(self.block.win)
-			pointCounter(self.block.win, self.block.points)
-			keyHist.append(getKeys())
-			showKeys(self.block.win, keyHist)
-			win.flip()
 
-			#second key press
-			drawBlankTask(self.block.win)
-			if (self.star == 1):
-				highlightBlackStar(self.block.win)
-			else:
-				highlightOrangeStar(self.block.win)
-			pointCounter(self.block.win, self.block.points)
-			keyHist.append(getKeys())
-			showKeys(self.block.win, keyHist)
-			# TODO: check if key seq is correct
-			win.flip()
+			self.keyPress(keyHist)
+			self.keyPress(keyHist)
+			self.keyPress(keyHist)
+			self.keyPress(keyHist)
 
-			#third key press
-			drawBlankTask(self.block.win)
-			if (self.star == 1):
-				highlightBlackStar(self.block.win)
-			else:
-				highlightOrangeStar(self.block.win)
-			pointCounter(self.block.win, self.block.points)
-			keyHist.append(getKeys())
-			showKeys(self.block.win, keyHist)
-			win.flip()
+			# TODO: add functionality for the last screen in a trial
 
-			#fourth key press
+		def keyPress(self, keyHist):
+			"""Runs a single key press for one trial"""
 			drawBlankTask(self.block.win)
 			if (self.star == 1):
 				highlightBlackStar(self.block.win)
 			else:
 				highlightOrangeStar(self.block.win)
 			pointCounter(self.block.win, self.block.points)
-			keyHist.append(getKeys())
 			showKeys(self.block.win, keyHist)
+			checkLowSeq(keyHist)
 			win.flip()
+			keyHist.append(getKeys())
+
+		def checkLowSeq(self, keyHist):
+			"""Checks if the user unlocked a machine part."""
+			if (len(keyHist) < 2):
+				return
+
+			elif (len(keyHist) < 4):
+				combos = [(keyHist[len(keyHist) - 2], keyHist[len(keyHist) - 1])]
+
+			elif (len(keyHist) == 4):
+				combos = [(keyHist[0], keyHist[1]), (keyHist[2], keyHist[3])]
+
+			#check what parts have been unlocked
+			for combo in combos:
+				for key, value in self.lowRules.items():
+					match1 = combo[0] == value[0]
+					match2 = combo[1] == value[1]
+					if match1 and match2:
+						self.showPart(key)
+
+		def showPart(self, partNumber):
+			"""Given a part number, calls the correct 
+			helper function to show the part."""
+			if partNumber == 1:
+				drawGear(self.block.win)
+			elif partNumber == 2:
+				drawLight(self.block.win)
+			else:
+				# TODO: add the other part visuals
+				return
 
 
 	def __init__(self, reactive, win):
@@ -74,7 +79,7 @@ class Block:
 			if ((i % 25) % 2 == 0):
 				star = 1
 			else:
-				star 0
+				star = 2
 			self.learningTrials.append(Trial(self.learningRules), star, self)
 
 		self.transferTrials = []
@@ -84,7 +89,7 @@ class Block:
 			if ((i % 25) % 2 == 0):
 				star = 1
 			else:
-				star 0
+				star = 2
 			self.transferTrials.append(Trial(self.transferRules), star, self)
 
 	def runBlock(self):
@@ -95,20 +100,18 @@ class Block:
 			trial.runTrial()
 
 class HighTransferBlock(Block):
-	def __init__(self, reactive):
-		Block.__init__(self, reactive)
-
 	def getRules(self):
 		#will eventually have some random rule selection procedure
-		learningRules = [[(2, 3), (4, 1), (3, 1), (2, 4)], [(1, 3), (4, 2)]]
-		transferRules = [[(2, 3), (4, 1), (3, 1), (2, 4)], [(1, 4), (3, 2)]]
+		learningRules = [{1: (2, 3), 2: (4, 1), 3: (3, 1), 4: (2, 4)}, 
+		{1: (1, 3), 2: (4, 2)}]
+		transferRules = [{1: (2, 3), 2: (4, 1), 3: (3, 1), 4: (2, 4)}, 
+		{1: (1, 4), 2: (3, 2)}]
 		return learningRules, transferRules
 
 class LowTransferBlock(Block):
-	def __init__(self, reactive):
-		Block.__init__(self, reactive)
-
 	def getRules(self):
-		learningRules = [[(1, 2), (2, 4), (1, 3), (3, 4)], [(1, 4), (2, 3)]]
-		transferRules = [[(1, 4), (3, 4), (1, 2), (3, 2)], [(1, 4), (2, 3)]]
+		learningRules = [{1: (1, 2), 2: (2, 4), 3: (1, 3), 4: (3, 4)},
+		 {1: (1, 4), 2: (2, 3)}]
+		transferRules = [{1: (1, 4), 2: (3, 4), 3: (1, 2), 4: (3, 2)}, 
+		{1: (1, 4), 2: (2, 3)}]
 		return learningRules, transferRules
