@@ -2,9 +2,7 @@ from psychopy import visual, event
 
 from taskHelpers import *
 
-#TASK SWITCHES
-FULL_SCREEN = True
-WINDOW_SIZE = [1400, 800] #if not full screen, will use this window size
+
 
 #Helpers for printing tutorial text:
 def instructionsScreen(win):
@@ -184,13 +182,3 @@ def runTutorial(win):
 	readyToPlayScreen(win)
 	win.flip()
 	event.waitKeys()
-
-win = visual.Window(
-	size = WINDOW_SIZE,
-	fullscr = FULL_SCREEN, 
-	color = [1, 1, 1],
-	units = "pix")
-
-runTutorial(win)
-
-win.close()

@@ -112,6 +112,12 @@ def showKeys(win, keys):
 	"""Will display all entries of keys (list of chars) in the 
 	key stroke box. Assumes first entry of keys was first key 
 	pressed in the trial."""
+	keys = keys.copy()
+	if (keys and type(keys[0]) == int):
+		#need to convert to letters
+		keyMap = {1: "d", 2: "f", 3: "j", 4: "k", -1: "NA"}
+		for i in range(len(keys)):
+			keys[i] = keyMap[keys[i]]
 	keyStims = []
 	for i in range(len(keys)):
 		#create the text
@@ -129,8 +135,8 @@ def showKeys(win, keys):
 def getKeys():
 	keyMap = {"d": 1, "f": 2, "j": 3, "k": 4}
 	keys = event.waitKeys()
-		if (len(keys) > 1):
-			raise Exception("Don't press more than 1 key at a time!")
-		if (keys[0] in keyMap):
-			return keyMap[keys[0]]
-		return -1
+	if (len(keys) > 1):
+		raise Exception("Don't press more than 1 key at a time!")
+	if (keys[0] in keyMap):
+		return keyMap[keys[0]]
+	return -1
