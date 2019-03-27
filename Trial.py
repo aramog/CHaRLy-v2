@@ -2,40 +2,45 @@ from taskHelpers import *
 
 from psychopy import event
 
+#TRIAL SWITCHES
 POINTS_PER_STAR = 100
 
 class Trial:
 	def __init__(self, rules, star, block):
+		#unpacks rules into instance vars
 		self.lowRules = rules[0]
 		self.highRules = rules[1]
+		#specifiies star and block for runTrial
 		self.star = star
 		self.block = block
 
 	def runTrial(self):
-		keyHist = []
+		keyHist = [] #running cache of a trial's key presses
+		#runs the sequence of updates to complete a 4 keystroke trial
+		self.updateWindow(keyHist)
+		self.updateWindow(keyHist)
+		self.updateWindow(keyHist)
+		self.updateWindow(keyHist)
+		#last screen possibly unlocks highest layer item and finishes trial
+		self.lastScreen(keyHist)
 
-		self.keyPress(keyHist)
-		self.keyPress(keyHist)
-		self.keyPress(keyHist)
-		self.keyPress(keyHist)
-
-		self.lastKeyPress(keyHist)
-
-	def keyPress(self, keyHist):
-		"""Runs a single key press for one trial"""
-		drawBlankTask(self.block.win)
-		if (self.star == 1):
+	def updateWindow(self, keyHist):
+		"""Gets input from user and makes the env. react according to
+		the parameters of the trial."""
+		drawBlankTask(self.block.win) #sets up the screen
+		if (self.star == 1): #highlights correct star
 			highlightBlackStar(self.block.win)
 		else:
 			highlightOrangeStar(self.block.win)
-		pointCounter(self.block.win, self.block.points)
-		showKeys(self.block.win, keyHist)
-		self.checkLowSeq(keyHist)
-		self.block.win.flip()
-		keyHist.append(getKeys())
+		pointCounter(self.block.win, self.block.points) #shows current points
+		showKeys(self.block.win, keyHist) 
+		self.checkLowSeq(keyHist) #checks and shows if a machine part has been unlocked
+		self.block.win.flip() #display all changes to user
+		keyHist.append(getKeys()) #get and record next key stroke.
 
-	def lastKeyPress(self, keyHist):
-		"""Runs the last key press window for a trial."""
+	def lastScreen(self, keyHist):
+		"""Runs the last window for a trial, unlocking a highest layer 
+		item if the sequence was correct."""
 		drawBlankTask(self.block.win)
 		if (self.star == 1):
 			highlightBlackStar(self.block.win)
@@ -69,7 +74,7 @@ class Trial:
 
 	def checkHighSeq(self, keyHist):
 		"""Checks if a user unlocked a star. Awards points if correct star"""
-		# TODO: Some error in here from playing arounddf
+		# TODO: Some error in here from playing around
 		#gets the flat rules to compare to keyHist
 		starRules = self.flatStarRules()
 		for j in range(len(starRules)):

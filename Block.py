@@ -6,6 +6,7 @@ from psychopy import visual
 #BLOCK SWITCHES
 LEARNING_TRIALS = 5
 TRANSFER_TRIALS = 5
+LEN_STAR_TRIALS = 25 #how long to prioritize one star
 
 class Block:
 	"""Generic block class. Initializes all rules and trials for
@@ -19,24 +20,27 @@ class Block:
 		self.learningTrials = []
 		#create learning trials
 		for i in range(LEARNING_TRIALS):
-			#way to alternate highlighted star every 25 trials
-			if (i % 50 < 25):
+			#way to alternate highlighted star every LEN_STAR_TRIALS
+			if (i % (LEN_STAR_TRIALS * 2) < LEN_STAR_TRIALS):
 				star = 1
 			else:
 				star = 2
+			#adds a trial object to sequence of learning trials
 			self.learningTrials.append(Trial(self.learningRules, star, self))
 
 		self.transferTrials = []
 		#create transfer trials
 		for i in range(TRANSFER_TRIALS):
-			#way to alternate highlighted star every 25 trials
-			if (i % 50 < 25):
+			#way to alternate highlighted star every LEN_STAR_TRIALS
+			if (i % (LEN_STAR_TRIALS * 2) < LEN_STAR_TRIALS):
 				star = 1
 			else:
 				star = 2
+			#adds a trial object to sequence of transfer trials
 			self.transferTrials.append(Trial(self.transferRules, star, self))
 
 	def runBlock(self):
+		#loops through all the trials
 		for trial in self.learningTrials:
 			trial.runTrial()
 
@@ -45,7 +49,11 @@ class Block:
 
 class HighTransferBlock(Block):
 	def getRules(self):
-		#will eventually have some random rule selection procedure
+		"""Rules are represented by a dictionary whose keys are the item number
+		, and values the correct action sequence of lower level items needed to
+		unlock it.
+		rules[0] are rules for middle layer, rules[1] for top layer."""
+		# TODO: Some random rule selection procedure.
 		learningRules = [{1: (2, 3), 2: (4, 1), 3: (3, 1), 4: (2, 4)}, 
 		{1: (1, 3), 2: (4, 2)}]
 		transferRules = [{1: (2, 3), 2: (4, 1), 3: (3, 1), 4: (2, 4)}, 
