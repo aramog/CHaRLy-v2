@@ -37,6 +37,11 @@ def drawBlankTask(win):
 		lineWidth = 5)
 	key_divide.draw()
 
+"""
+TODO: make these drawStimulus functions take in a location so it can
+show items in different positions depending on the stage of the trial
+and other items that have been unlocked.
+"""
 def drawGear(win):
 	"""Draws the gear stimulus."""
 	gear = visual.ImageStim(
@@ -54,6 +59,25 @@ def drawLight(win):
 		pos = [0, -40])
 	light.size = [light.size[0] * .7, light.size[1] * .7]
 	light.draw()
+
+def drawPower(win):
+	"""Draws the power stimulus."""
+	power = visual.ImageStim(
+		win = win,
+		image = "assets/power.jpg",
+		pos = [0, -40])
+	power.size = [power.size[0] * .07, power.size[1] * .07]
+	power.draw()
+
+def drawFan(win):
+	"""Draws the fan stimulus."""
+	fan = visual.ImageStim(
+		win = win,
+		image = "assets/fan.jpg",
+		pos = [-60, -40])
+	fan.size = [fan.size[0] * .1, fan.size[1] * .1]
+	fan.draw()
+
 
 def highlightOrangeStar(win):
 	"""Draws a box around the orange star to indicate

@@ -74,9 +74,10 @@ class Trial:
 
 	def checkHighSeq(self, keyHist):
 		"""Checks if a user unlocked a star. Awards points if correct star"""
-		# TODO: Some error in here from playing around
 		#gets the flat rules to compare to keyHist
 		starRules = self.flatStarRules()
+		print(starRules)
+		print(keyHist)
 		for j in range(len(starRules)):
 			match = True
 			#iterates over the keys in a rule
@@ -84,13 +85,16 @@ class Trial:
 				if starRules[j][i] != keyHist[i]:
 					#if key hist doesn't match rule, not a match
 					match = False
+					break
 			if match:
 				#means a star was unlocked
-				if j == 1:
+				if j == 0:
 					unlockBlackStar(self.block.win)
-				elif j == 2:
+				elif j == 1:
 					unlockOrangeStar(self.block.win)
 				#now check if we add points
+				print(j)
+				print(self.star)
 				if j + 1 == self.star:
 					self.block.points += POINTS_PER_STAR
 				break
@@ -103,7 +107,7 @@ class Trial:
 			#iterate the action seq and extract primitive sequence
 			for part in value:
 				lowRule = self.lowRules[part]
-				rule.extend([key for key in self.lowRules])
+				rule.extend([key for key in lowRule])
 			rules.append(tuple(rule))
 		return rules
 
@@ -114,6 +118,7 @@ class Trial:
 			drawGear(self.block.win)
 		elif partNumber == 2:
 			drawLight(self.block.win)
-		else:
-			# TODO: add the other part visuals
-			return
+		elif partNumber == 3:
+			drawPower(self.block.win)
+		elif partNumber == 4:
+			drawFan(self.block.win)

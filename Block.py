@@ -4,9 +4,9 @@ from Trial import *
 from psychopy import visual
 
 #BLOCK SWITCHES
-LEARNING_TRIALS = 5
-TRANSFER_TRIALS = 5
-LEN_STAR_TRIALS = 25 #how long to prioritize one star
+LEARNING_TRIALS = 6
+TRANSFER_TRIALS = 0
+LEN_STAR_TRIALS = 3 #how long to prioritize one star
 
 class Block:
 	"""Generic block class. Initializes all rules and trials for
