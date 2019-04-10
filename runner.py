@@ -24,7 +24,6 @@ if RUN_TUTORIAL:
 
 blocks = []
 blocks.append(HighTransferBlock(True, win))
-blocks.append(LowTransferBlock(True, win))
 
 for block in blocks:
 	block.runBlock()

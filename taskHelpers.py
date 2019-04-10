@@ -16,20 +16,6 @@ def drawBlankTask(win):
 		height = 65)
 	window_cover.draw()
 
-	#TODO: Change this so that only the star being unlocked is shown
-	#can just delete these displays and only show a star in highlight functions
-	black_star = visual.ImageStim(
-		win = win,
-		image = "assets/black-star.jpg",
-		pos = [-75, 300])
-	black_star.draw()
-
-	orange_star = visual.ImageStim(
-		win = win,
-		image = "assets/orange-star.jpg",
-		pos = [75, 300])
-	orange_star.draw()
-	
 	key_hist = visual.Rect(
 		win = win,
 		width = 250,
@@ -107,48 +93,66 @@ def drawFan(win, itemsOnScreen):
 def highlightOrangeStar(win):
 	"""Draws a box around the orange star to indicate
 	the particpant should try to unlock that star."""
-	#TODO: center the star so that it is the only one shown
+	orange_star = visual.ImageStim(
+		win = win,
+		image = "assets/orange-star.png",
+		pos = [0, 300])
+	orange_star.draw()
 	highlightBox = visual.Rect(
 		win = win,
 		width = 110,
 		height = 110,
-		pos = [82, 300],
+		pos = [0, 300],
 		lineColor = [-1, -1, -1],
 		lineWidth = 5)
 	highlightBox.draw()
-	return highlightBox
 
 def unlockOrangeStar(win):
 	"""Draws a box around the orange star and fills it
 	green to indicate it has been unlocked."""
 	#TODO: Make this unlock towards the bottom left of the machine
-	highlightBox = highlightOrangeStar(win)
-	highlightBox.fillColor = [-1, 1, -1]
-	highlightBox.opacity = .3
-	highlightBox.draw()
+	orange_star = visual.ImageStim(
+		win = win,
+		image = "assets/orange-star.png",
+		pos = [-100, -150])
+	orange_star.draw()
 
 def highlightBlackStar(win):
 	"""Draws a box around the black star to indicate
 	the particpant should try to unlock that star."""
-	#TODO: center the star so that it is the only one shown
+	black_star = visual.ImageStim(
+		win = win,
+		image = "assets/black-star.png",
+		pos = [0, 300])
+	black_star.draw()
 	highlightBox = visual.Rect(
 		win = win,
 		width = 110,
 		height = 110,
-		pos = [-72, 300],
+		pos = [0, 300],
 		lineColor = [-1, -1, -1],
 		lineWidth = 5)
 	highlightBox.draw()
-	return highlightBox
 
 def unlockBlackStar(win):
 	"""Draws a box around the black star and fills it
 	green to indicate it has been unlocked."""
-	#TODO: Make this unlock towards the bottom left of the machine
-	highlightBox = highlightBlackStar(win)
-	highlightBox.fillColor = [-1, 1, -1]
-	highlightBox.opacity = .3
-	highlightBox.draw()
+	black_star = visual.ImageStim(
+		win = win,
+		image = "assets/black-star.png",
+		pos = [-100, -150])
+	black_star.draw()
+	"""
+	idea I had to open the front flaps when a star is unlocked.
+	hard to make look good so I scrapped it.
+	open_screen = visual.Rect(
+		win = win,
+		fillColor = [1, 1, 1],
+		width = 90,
+		height = 40,
+		pos = [-38, -110])
+	open_screen.draw()
+	"""
 
 def pointCounter(win, points):
 	"""Draws a point counter for the given number of 

@@ -5,7 +5,8 @@ import time
 
 #TRIAL SWITCHES
 POINTS_PER_STAR = 100
-WAIT_TIME = .5 #inter trial interval
+HOLD_SCREEN_TIME = .8 #how long to leave the last screen of a trial up
+WAIT_TIME = .3 #inter trial interval
 
 class Trial:
 	def __init__(self, rules, star, block):
@@ -55,7 +56,7 @@ class Trial:
 		self.checkHighSeq(keyHist)
 		pointCounter(self.block.win, self.block.points)
 		self.block.win.flip()
-		time.sleep(WAIT_TIME)
+		time.sleep(HOLD_SCREEN_TIME)
 		blankScreen(self.block.win)
 		time.sleep(WAIT_TIME)
 

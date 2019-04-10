@@ -10,10 +10,10 @@ def instructionsScreen(win):
 	of the trial."""
 	header = visual.TextStim(
 		win = win,
-		text = "Instructions",
+		text = "Instructions - Press any key to move to the next screen",
 		pos = [0, 250],
 		color = [-1, -1, -1],
-		height = 50)
+		height = 30)
 	header.draw()
 
 	firstBulletText = "Your objective is to as earn as many points as possible by unlocking stars. Stars are unlocked using a machine which is controlled by the D, F, J, and K keys. Each star is unlocked by a unique sequence of four key presses."
@@ -21,36 +21,48 @@ def instructionsScreen(win):
 	firstBullet = visual.TextStim(
 		win = win,
 		text = firstBulletText,
-		pos = [0, 125],
+		pos = [0, 0],
 		color = [-1, -1, -1],
-		height = 20)
+		height = 30)
 	firstBullet.draw()
+	win.flip()
+	event.waitKeys()
+
+	header.draw()
 
 	secondBulletText = "The machine’s inner workings will sometimes be visible to you, and you should use this information to help you unlock more stars."
 	secondBullet = visual.TextStim(
 		win = win,
 		text = secondBulletText,
-		pos = [0, -25],
+		pos = [0, 0],
 		color = [-1, -1, -1],
-		height = 20)
+		height = 30)
 	secondBullet.draw()
+
+	win.flip()
+	event.waitKeys()
+
+	header.draw()
 
 	thirdBulletText = "Every trial, we will highlight the star you should try to unlock. Only this star will give you points. You can still unlock the other star, but you won't earn any points."
 	thirdBullet = visual.TextStim(
 		win = win,
 		text = thirdBulletText,
-		pos = [0, -150],
+		pos = [0, 0],
 		color = [-1, -1, -1],
-		height = 20)
+		height = 30)
 	thirdBullet.draw()
 
-	pressKeyText = "Press any key to begin!"
+	win.flip()
+	event.waitKeys()
+
+	pressKeyText = "Press any key to start an interactive tutorial!"
 	pressKey = visual.TextStim(
 		win = win,
 		text = pressKeyText,
-		pos = [0, -250],
+		pos = [0, 0],
 		color = [-1, -1, -1],
-		height = 25)
+		height = 40)
 	pressKey.draw()
 
 def tutorial1Text(win):
@@ -170,6 +182,7 @@ def runTutorial(win):
 
 
 	drawBlankTask(win)
+	highlightBlackStar(win)
 	unlockBlackStar(win)
 	drawGear(win, 0)
 	drawLight(win, 1)

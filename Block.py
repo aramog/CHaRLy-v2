@@ -4,7 +4,7 @@ from Trial import *
 from psychopy import visual
 
 #BLOCK SWITCHES
-LEARNING_TRIALS = 1
+LEARNING_TRIALS = 6
 TRANSFER_TRIALS = 0
 LEN_STAR_TRIALS = 3 #how long to prioritize one star
 
