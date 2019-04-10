@@ -14,3 +14,4 @@ def makeJson(blocks, fileName):
 	#saves as json
 	with open(fileName, 'w') as outfile:
 		json.dump(res, outfile)
+		

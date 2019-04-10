@@ -5,7 +5,7 @@ import time
 
 #TRIAL SWITCHES
 POINTS_PER_STAR = 100
-WAIT_TIME = 1 #inter trial interval
+WAIT_TIME = .5 #inter trial interval
 
 class Trial:
 	def __init__(self, rules, star, block):
@@ -56,6 +56,8 @@ class Trial:
 		pointCounter(self.block.win, self.block.points)
 		self.block.win.flip()
 		time.sleep(WAIT_TIME)
+		blankScreen(self.block.win)
+		time.sleep(WAIT_TIME)
 
 	def checkLowSeq(self, keyHist):
 		"""Checks if the user unlocked a machine part."""
@@ -69,12 +71,14 @@ class Trial:
 			combos = [(keyHist[0], keyHist[1]), (keyHist[2], keyHist[3])]
 
 		#check what parts have been unlocked
+		i = 0 #counts number of items unlocked
 		for combo in combos:
 			for key, value in self.lowRules.items():
 				match1 = combo[0] == value[0]
 				match2 = combo[1] == value[1]
 				if match1 and match2:
-					self.showPart(key)
+					self.showPart(key, i)
+					i += 1
 
 	def checkHighSeq(self, keyHist):
 		"""Checks if a user unlocked a star. Awards points if correct star"""
@@ -115,20 +119,20 @@ class Trial:
 			rules.append(tuple(rule))
 		return rules
 
-	def showPart(self, partNumber):
+	def showPart(self, partNumber, itemsOnScreen = 0):
 		"""Given a part number, calls the correct 
 		helper function to show the part."""
 		if (not self.block.reactive):
 			#if the block isn't reactive, don't want to show any parts
 			return
 		if partNumber == 1:
-			drawGear(self.block.win)
+			drawGear(self.block.win, itemsOnScreen)
 		elif partNumber == 2:
-			drawLight(self.block.win)
+			drawLight(self.block.win, itemsOnScreen)
 		elif partNumber == 3:
-			drawPower(self.block.win)
+			drawPower(self.block.win, itemsOnScreen)
 		elif partNumber == 4:
-			drawFan(self.block.win)
+			drawFan(self.block.win, itemsOnScreen)
 
 	def getData(self):
 		"""Returns a dictionary of all the data related to the trial."""

@@ -152,7 +152,7 @@ def runTutorial(win):
 
 	drawBlankTask(win)
 	highlightBlackStar(win)
-	drawGear(win)
+	drawGear(win, 0)
 	pointCounter(win, 0)
 	showKeys(win, ["d", "k"])
 	tutorial3Text(win)
@@ -161,7 +161,7 @@ def runTutorial(win):
 
 	drawBlankTask(win)
 	highlightBlackStar(win)
-	drawGear(win)
+	drawGear(win, 0)
 	pointCounter(win, 0)
 	showKeys(win, ["d", "k", "j"])
 	tutorial4Text(win)
@@ -171,8 +171,8 @@ def runTutorial(win):
 
 	drawBlankTask(win)
 	unlockBlackStar(win)
-	drawGear(win)
-	drawLight(win)
+	drawGear(win, 0)
+	drawLight(win, 1)
 	pointCounter(win, 100)
 	showKeys(win, ["d", "k", "j", "f"])
 	tutorial5Text(win)
@@ -182,3 +182,4 @@ def runTutorial(win):
 	readyToPlayScreen(win)
 	win.flip()
 	event.waitKeys()
+	

@@ -8,6 +8,16 @@ def drawBlankTask(win):
 		image = "assets/machine.jpg")
 	machine.draw()
 
+	window_cover = visual.Rect(
+		win = win,
+		fillColor = [1, 1, 1],
+		pos = [-35, -40],
+		width = 135,
+		height = 65)
+	window_cover.draw()
+
+	#TODO: Change this so that only the star being unlocked is shown
+	#can just delete these displays and only show a star in highlight functions
 	black_star = visual.ImageStim(
 		win = win,
 		image = "assets/black-star.jpg",
@@ -37,44 +47,59 @@ def drawBlankTask(win):
 		lineWidth = 5)
 	key_divide.draw()
 
-"""
-TODO: make these drawStimulus functions take in a location so it can
-show items in different positions depending on the stage of the trial
-and other items that have been unlocked.
-"""
-def drawGear(win):
+def blankScreen(win):
+	"""Wipes the screen inbetween trials."""
+	win.flip()
+
+def drawGear(win, itemsOnScreen):
 	"""Draws the gear stimulus."""
+	if itemsOnScreen == 0:
+		x = -60
+	else:
+		x = 0
 	gear = visual.ImageStim(
 		win = win,
 		image = "assets/gear.jpg",
-		pos = [-60, -40])
+		pos = [x, -40])
 	gear.size = [gear.size[0] * .7, gear.size[1] * .7]
 	gear.draw()
 
-def drawLight(win):
+def drawLight(win, itemsOnScreen):
 	"""Draws the light stimulus."""
+	if itemsOnScreen == 0:
+		x = -60
+	else:
+		x = 0
 	light = visual.ImageStim(
 		win = win,
 		image = "assets/light.jpg",
-		pos = [0, -40])
+		pos = [x, -40])
 	light.size = [light.size[0] * .7, light.size[1] * .7]
 	light.draw()
 
-def drawPower(win):
+def drawPower(win, itemsOnScreen):
 	"""Draws the power stimulus."""
+	if itemsOnScreen == 0:
+		x = -60
+	else:
+		x = 0
 	power = visual.ImageStim(
 		win = win,
 		image = "assets/power.jpg",
-		pos = [0, -40])
+		pos = [x, -40])
 	power.size = [power.size[0] * .07, power.size[1] * .07]
 	power.draw()
 
-def drawFan(win):
+def drawFan(win, itemsOnScreen):
 	"""Draws the fan stimulus."""
+	if itemsOnScreen == 0:
+		x = -60
+	else:
+		x = 0
 	fan = visual.ImageStim(
 		win = win,
 		image = "assets/fan.jpg",
-		pos = [-60, -40])
+		pos = [x, -40])
 	fan.size = [fan.size[0] * .1, fan.size[1] * .1]
 	fan.draw()
 
@@ -82,6 +107,7 @@ def drawFan(win):
 def highlightOrangeStar(win):
 	"""Draws a box around the orange star to indicate
 	the particpant should try to unlock that star."""
+	#TODO: center the star so that it is the only one shown
 	highlightBox = visual.Rect(
 		win = win,
 		width = 110,
@@ -95,6 +121,7 @@ def highlightOrangeStar(win):
 def unlockOrangeStar(win):
 	"""Draws a box around the orange star and fills it
 	green to indicate it has been unlocked."""
+	#TODO: Make this unlock towards the bottom left of the machine
 	highlightBox = highlightOrangeStar(win)
 	highlightBox.fillColor = [-1, 1, -1]
 	highlightBox.opacity = .3
@@ -103,6 +130,7 @@ def unlockOrangeStar(win):
 def highlightBlackStar(win):
 	"""Draws a box around the black star to indicate
 	the particpant should try to unlock that star."""
+	#TODO: center the star so that it is the only one shown
 	highlightBox = visual.Rect(
 		win = win,
 		width = 110,
@@ -116,6 +144,7 @@ def highlightBlackStar(win):
 def unlockBlackStar(win):
 	"""Draws a box around the black star and fills it
 	green to indicate it has been unlocked."""
+	#TODO: Make this unlock towards the bottom left of the machine
 	highlightBox = highlightBlackStar(win)
 	highlightBox.fillColor = [-1, 1, -1]
 	highlightBox.opacity = .3
@@ -145,7 +174,14 @@ def showKeys(win, keys):
 	keyStims = []
 	for i in range(len(keys)):
 		#create the text
-		keyText = visual.TextStim(
+		if keys[i] != "NA":
+			keyText = visual.ImageStim(
+				win = win,
+				image = "assets/" + keys[i] + ".png",
+				pos = [-95 + i*60, -250])
+			keyText.size = [keyText.size[0] * .25, keyText.size[1] * .25]
+		else:
+			keyText = visual.TextStim(
 			win = win,
 			text = keys[i].upper(),
 			pos = [-95 + i*60, -250],
