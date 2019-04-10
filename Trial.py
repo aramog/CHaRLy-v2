@@ -1,9 +1,11 @@
 from taskHelpers import *
 
 from psychopy import event
+import time
 
 #TRIAL SWITCHES
 POINTS_PER_STAR = 100
+WAIT_TIME = 1 #inter trial interval
 
 class Trial:
 	def __init__(self, rules, star, block):
@@ -13,6 +15,7 @@ class Trial:
 		#specifiies star and block for runTrial
 		self.star = star
 		self.block = block
+		self.keys = None
 
 	def runTrial(self):
 		keyHist = [] #running cache of a trial's key presses
@@ -23,6 +26,7 @@ class Trial:
 		self.updateWindow(keyHist)
 		#last screen possibly unlocks highest layer item and finishes trial
 		self.lastScreen(keyHist)
+		self.keys = keyHist
 
 	def updateWindow(self, keyHist):
 		"""Gets input from user and makes the env. react according to
@@ -51,7 +55,7 @@ class Trial:
 		self.checkHighSeq(keyHist)
 		pointCounter(self.block.win, self.block.points)
 		self.block.win.flip()
-		event.waitKeys()
+		time.sleep(WAIT_TIME)
 
 	def checkLowSeq(self, keyHist):
 		"""Checks if the user unlocked a machine part."""
@@ -114,6 +118,9 @@ class Trial:
 	def showPart(self, partNumber):
 		"""Given a part number, calls the correct 
 		helper function to show the part."""
+		if (not self.block.reactive):
+			#if the block isn't reactive, don't want to show any parts
+			return
 		if partNumber == 1:
 			drawGear(self.block.win)
 		elif partNumber == 2:
@@ -122,3 +129,14 @@ class Trial:
 			drawPower(self.block.win)
 		elif partNumber == 4:
 			drawFan(self.block.win)
+
+	def getData(self):
+		"""Returns a dictionary of all the data related to the trial."""
+		res = {
+			"rules": [self.lowRules, self.highRules],
+			"key_press": self.keys,
+			"star": self.star,
+			"trial_type": "learning_sequence",
+			"points": self.block.points
+		}
+		return res

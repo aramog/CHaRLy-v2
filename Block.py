@@ -5,7 +5,7 @@ from psychopy import visual
 
 #BLOCK SWITCHES
 LEARNING_TRIALS = 6
-TRANSFER_TRIALS = 0
+TRANSFER_TRIALS = 6
 LEN_STAR_TRIALS = 3 #how long to prioritize one star
 
 class Block:
@@ -16,6 +16,9 @@ class Block:
 		self.reactive = reactive
 		self.points = 0
 		self.win = win #pyschopy window for drawing
+		#stores data for each trial.
+		self.learningData = []
+		self.transferData = []
 		
 		self.learningTrials = []
 		#create learning trials
@@ -40,12 +43,18 @@ class Block:
 			self.transferTrials.append(Trial(self.transferRules, star, self))
 
 	def runBlock(self):
-		#loops through all the trials
+		#loops through all the trials and records data
 		for trial in self.learningTrials:
 			trial.runTrial()
+			self.learningData.append(trial.getData())
 
 		for trial in self.transferTrials:
 			trial.runTrial()
+			self.transferData.append(trial.getData())
+
+	def getData(self):
+		"""Returns all data related to the block."""
+		return self.learningData, self.transferData
 
 class HighTransferBlock(Block):
 	def getRules(self):
@@ -53,7 +62,6 @@ class HighTransferBlock(Block):
 		, and values the correct action sequence of lower level items needed to
 		unlock it.
 		rules[0] are rules for middle layer, rules[1] for top layer."""
-		# TODO: Some random rule selection procedure.
 		learningRules = [{1: (2, 3), 2: (4, 1), 3: (3, 1), 4: (2, 4)}, 
 		{1: (1, 3), 2: (4, 2)}]
 		transferRules = [{1: (2, 3), 2: (4, 1), 3: (3, 1), 4: (2, 4)}, 

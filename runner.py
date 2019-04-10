@@ -1,10 +1,14 @@
 from tutorial import *
 from Block import *
 
+from getData import makeJson
+
 #TASK SWITCHES
 FULL_SCREEN = False
 WINDOW_SIZE = [800, 800] #if not full screen, will use this window size
 RUN_TUTORIAL = False #whether to show the tutorial, false for testing
+
+SUBJ_ID = input("Subject ID? ")
 
 #creates window for the task
 win = visual.Window(
@@ -16,7 +20,13 @@ win = visual.Window(
 if RUN_TUTORIAL:
 	runTutorial(win)
 
-block = HighTransferBlock(True, win)
-block.runBlock()
+blocks = []
+blocks.append(HighTransferBlock(True, win))
+blocks.append(LowTransferBlock(True, win))
+
+for block in blocks:
+	block.runBlock()
+
+makeJson(blocks, "data/subj" + SUBJ_ID + ".json")
 
 win.close()
