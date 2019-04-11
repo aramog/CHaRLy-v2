@@ -106,6 +106,7 @@ def highlightOrangeStar(win):
 		lineColor = [-1, -1, -1],
 		lineWidth = 5)
 	highlightBox.draw()
+	return highlightBox
 
 def unlockOrangeStar(win):
 	"""Draws a box around the orange star and fills it
@@ -116,6 +117,13 @@ def unlockOrangeStar(win):
 		image = "assets/orange-star.png",
 		pos = [-100, -150])
 	orange_star.draw()
+
+def highlightAndUnlockOrange(win):
+	"""When the orange star is unlocked and points are earned."""
+	highlightBox = highlightOrangeStar(win)
+	highlightBox.fillColor = [0, 1, 0]
+	highlightBox.opacity = .3
+	highlightBox.draw()
 
 def highlightBlackStar(win):
 	"""Draws a box around the black star to indicate
@@ -133,6 +141,7 @@ def highlightBlackStar(win):
 		lineColor = [-1, -1, -1],
 		lineWidth = 5)
 	highlightBox.draw()
+	return highlightBox
 
 def unlockBlackStar(win):
 	"""Draws a box around the black star and fills it
@@ -153,6 +162,12 @@ def unlockBlackStar(win):
 		pos = [-38, -110])
 	open_screen.draw()
 	"""
+def highlightAndUnlockBlack(win):
+	"""When the black star is unlocked and points are earned."""
+	highlightBox = highlightBlackStar(win)
+	highlightBox.fillColor = [0, 1, 0]
+	highlightBox.opacity = .3
+	highlightBox.draw()
 
 def pointCounter(win, points):
 	"""Draws a point counter for the given number of 

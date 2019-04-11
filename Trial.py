@@ -106,6 +106,10 @@ class Trial:
 				print(self.star)
 				if j + 1 == self.star:
 					self.block.points += POINTS_PER_STAR
+					if j == 0:
+						highlightAndUnlockBlack(self.block.win)
+					else:
+						highlightAndUnlockOrange(self.block.win)
 				break
 
 	def flatStarRules(self):
