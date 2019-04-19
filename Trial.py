@@ -17,6 +17,7 @@ class Trial:
 		self.star = star
 		self.block = block
 		self.keys = None
+		self.unlock = -1
 
 	def runTrial(self):
 		keyHist = [] #running cache of a trial's key presses
@@ -34,9 +35,13 @@ class Trial:
 		the parameters of the trial."""
 		drawBlankTask(self.block.win) #sets up the screen
 		if (self.star == 1): #highlights correct star
-			highlightBlackStar(self.block.win)
+			highlightStar(self.block.win, "assets/black-star.png")
+		elif (self.star == 2):
+			highlightStar(self.block.win, "assets/orange-star.png")
+		elif (self.star == 3):
+			highlightStar(self.block.win, "assets/blue-star.png")
 		else:
-			highlightOrangeStar(self.block.win)
+			highlightStar(self.block.win, "assets/gray-star.png")
 		pointCounter(self.block.win, self.block.points) #shows current points
 		showKeys(self.block.win, keyHist) 
 		self.checkLowSeq(keyHist) #checks and shows if a machine part has been unlocked
@@ -47,10 +52,14 @@ class Trial:
 		"""Runs the last window for a trial, unlocking a highest layer 
 		item if the sequence was correct."""
 		drawBlankTask(self.block.win)
-		if (self.star == 1):
-			highlightBlackStar(self.block.win)
+		if (self.star == 1): #highlights correct star
+			highlightStar(self.block.win, "assets/black-star.png")
+		elif (self.star == 2):
+			highlightStar(self.block.win, "assets/orange-star.png")
+		elif (self.star == 3):
+			highlightStar(self.block.win, "assets/blue-star.png")
 		else:
-			highlightOrangeStar(self.block.win)
+			highlightStar(self.block.win, "assets/gray-star.png")
 		showKeys(self.block.win, keyHist)
 		self.checkLowSeq(keyHist)
 		self.checkHighSeq(keyHist)
@@ -97,19 +106,26 @@ class Trial:
 					break
 			if match:
 				#means a star was unlocked
+				self.unlock = j + 1
 				if j == 0:
-					unlockBlackStar(self.block.win)
+					unlockStar(self.block.win, "assets/black-star.png")
 				elif j == 1:
-					unlockOrangeStar(self.block.win)
+					unlockStar(self.block.win, "assets/orange-star.png")
+				elif j == 2:
+					unlockStar(self.block.win, "assets/blue-star.png")
+				elif j == 3:
+					unlockStar(self.block.win, "assets/gray-star.png")
 				#now check if we add points
-				print(j)
-				print(self.star)
 				if j + 1 == self.star:
 					self.block.points += POINTS_PER_STAR
 					if j == 0:
-						highlightAndUnlockBlack(self.block.win)
-					else:
-						highlightAndUnlockOrange(self.block.win)
+						highlightAndUnlock(self.block.win, "assets/black-star.png")
+					elif j == 1:
+						highlightAndUnlock(self.block.win, "assets/orange-star.png")
+					elif j == 2:
+						highlightAndUnlock(self.block.win, "assets/blue-star.png")
+					elif j == 3:
+						highlightAndUnlock(self.block.win, "assets/gray-star.png")
 				break
 
 	def flatStarRules(self):

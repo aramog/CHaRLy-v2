@@ -2,8 +2,6 @@ from psychopy import visual, event
 
 from taskHelpers import *
 
-
-
 #Helpers for printing tutorial text:
 def instructionsScreen(win):
 	"""Shows the instruction screen for the start
@@ -148,14 +146,14 @@ def runTutorial(win):
 	event.waitKeys()
 
 	drawBlankTask(win)
-	highlightBlackStar(win)
+	highlightStar(win, "assets/black-star.png")
 	pointCounter(win, 0)
 	tutorial1Text(win)
 	win.flip()
 	event.waitKeys(keyList = ["d"])
 
 	drawBlankTask(win)
-	highlightBlackStar(win)
+	highlightStar(win, "assets/black-star.png")
 	pointCounter(win, 0)
 	showKeys(win, ["d"])
 	tutorial2Text(win)
@@ -163,7 +161,7 @@ def runTutorial(win):
 	event.waitKeys(keyList = ["k"])
 
 	drawBlankTask(win)
-	highlightBlackStar(win)
+	highlightStar(win, "assets/black-star.png")
 	drawGear(win, 0)
 	pointCounter(win, 0)
 	showKeys(win, ["d", "k"])
@@ -172,7 +170,7 @@ def runTutorial(win):
 	event.waitKeys(keyList = ["j"])
 
 	drawBlankTask(win)
-	highlightBlackStar(win)
+	highlightStar(win, "assets/black-star.png")
 	drawGear(win, 0)
 	pointCounter(win, 0)
 	showKeys(win, ["d", "k", "j"])
@@ -182,8 +180,8 @@ def runTutorial(win):
 
 
 	drawBlankTask(win)
-	highlightBlackStar(win)
-	unlockBlackStar(win)
+	highlightAndUnlock(win, "assets/black-star.png")
+	unlockStar(win, "assets/black-star.png")
 	drawGear(win, 0)
 	drawLight(win, 1)
 	pointCounter(win, 100)

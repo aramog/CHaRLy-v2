@@ -1,4 +1,5 @@
 from psychopy import visual, event
+import time
 
 def drawBlankTask(win):
 	"""Draws a blank template for a trial. This includes drawing
@@ -89,15 +90,12 @@ def drawFan(win, itemsOnScreen):
 	fan.size = [fan.size[0] * .1, fan.size[1] * .1]
 	fan.draw()
 
-
-def highlightOrangeStar(win):
-	"""Draws a box around the orange star to indicate
-	the particpant should try to unlock that star."""
-	orange_star = visual.ImageStim(
+def highlightStar(win, img):
+	star = visual.ImageStim(
 		win = win,
-		image = "assets/orange-star.png",
+		image = img,
 		pos = [0, 300])
-	orange_star.draw()
+	star.draw()
 	highlightBox = visual.Rect(
 		win = win,
 		width = 110,
@@ -108,63 +106,15 @@ def highlightOrangeStar(win):
 	highlightBox.draw()
 	return highlightBox
 
-def unlockOrangeStar(win):
-	"""Draws a box around the orange star and fills it
-	green to indicate it has been unlocked."""
-	#TODO: Make this unlock towards the bottom left of the machine
-	orange_star = visual.ImageStim(
+def unlockStar(win, img):
+	star = visual.ImageStim(
 		win = win,
-		image = "assets/orange-star.png",
+		image = img,
 		pos = [-100, -150])
-	orange_star.draw()
-
-def highlightAndUnlockOrange(win):
-	"""When the orange star is unlocked and points are earned."""
-	highlightBox = highlightOrangeStar(win)
-	highlightBox.fillColor = [0, 1, 0]
-	highlightBox.opacity = .3
-	highlightBox.draw()
-
-def highlightBlackStar(win):
-	"""Draws a box around the black star to indicate
-	the particpant should try to unlock that star."""
-	black_star = visual.ImageStim(
-		win = win,
-		image = "assets/black-star.png",
-		pos = [0, 300])
-	black_star.draw()
-	highlightBox = visual.Rect(
-		win = win,
-		width = 110,
-		height = 110,
-		pos = [0, 300],
-		lineColor = [-1, -1, -1],
-		lineWidth = 5)
-	highlightBox.draw()
-	return highlightBox
-
-def unlockBlackStar(win):
-	"""Draws a box around the black star and fills it
-	green to indicate it has been unlocked."""
-	black_star = visual.ImageStim(
-		win = win,
-		image = "assets/black-star.png",
-		pos = [-100, -150])
-	black_star.draw()
-	"""
-	idea I had to open the front flaps when a star is unlocked.
-	hard to make look good so I scrapped it.
-	open_screen = visual.Rect(
-		win = win,
-		fillColor = [1, 1, 1],
-		width = 90,
-		height = 40,
-		pos = [-38, -110])
-	open_screen.draw()
-	"""
-def highlightAndUnlockBlack(win):
-	"""When the black star is unlocked and points are earned."""
-	highlightBox = highlightBlackStar(win)
+	star.draw()
+ 
+def highlightAndUnlock(win, img):
+	highlightBox = highlightStar(win, img)
 	highlightBox.fillColor = [0, 1, 0]
 	highlightBox.opacity = .3
 	highlightBox.draw()
@@ -214,8 +164,19 @@ def showKeys(win, keys):
 def getKeys():
 	keyMap = {"d": 1, "f": 2, "j": 3, "k": 4}
 	keys = event.waitKeys()
-	if (len(keys) > 1):
-		raise Exception("Don't press more than 1 key at a time!")
+	#if (len(keys) > 1):
+		#raise Exception("Don't press more than 1 key at a time!")
 	if (keys[0] in keyMap):
 		return keyMap[keys[0]]
 	return -1
+
+def breakScreen(win):
+	breakText = visual.TextStim(
+		win = win,
+		text = "1 minute break",
+		pos = [0, 0],
+		color = [-1, -1, -1],
+		height = 50)
+	breakText.draw()
+	win.flip()
+	time.sleep(60)

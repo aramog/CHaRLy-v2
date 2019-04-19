@@ -3,50 +3,51 @@ from Trial import *
 
 from psychopy import visual
 
-#BLOCK SWITCHES
-LEARNING_TRIALS = 6
-TRANSFER_TRIALS = 0
-LEN_STAR_TRIALS = 3 #how long to prioritize one star
-
 class Block:
 	"""Generic block class. Initializes all rules and trials for
 	learning and transfer phase."""
-	def __init__(self, reactive, win):
+	def __init__(self, reactive, win, 
+		learningTrials, transferTrials, lenStarTrials):
 		self.learningRules, self.transferRules = self.getRules()
 		self.reactive = reactive
 		self.points = 0
 		self.win = win #pyschopy window for drawing
+		self.numLearningTrials = learningTrials
+		self.numTransferTrials = transferTrials
+		self.lenStarTrials = lenStarTrials
 		#stores data for each trial.
 		self.learningData = []
 		self.transferData = []
 		
 		self.learningTrials = []
 		#create learning trials
-		for i in range(LEARNING_TRIALS):
-			#way to alternate highlighted star every LEN_STAR_TRIALS
-			if (i % (LEN_STAR_TRIALS * 2) < LEN_STAR_TRIALS):
-				star = 1
-			else:
-				star = 2
-			#adds a trial object to sequence of learning trials
-			self.learningTrials.append(Trial(self.learningRules, star, self))
+		i, j, star = 0, 0, 1
+		while (i < self.numLearningTrials):
+			while (j < self.lenStarTrials):
+				self.learningTrials.append(Trial(self.learningRules, star, self))
+				j += 1
+				i += 1
+			star = star % 4 + 1
+			j = 0
 
 		self.transferTrials = []
 		#create transfer trials
-		for i in range(TRANSFER_TRIALS):
-			#way to alternate highlighted star every LEN_STAR_TRIALS
-			if (i % (LEN_STAR_TRIALS * 2) < LEN_STAR_TRIALS):
-				star = 1
-			else:
-				star = 2
-			#adds a trial object to sequence of transfer trials
-			self.transferTrials.append(Trial(self.transferRules, star, self))
+		i, j, star = 0, 0, 1
+		while (i < self.numTransferTrials):
+			while (j < self.lenStarTrials):
+				self.transferTrials.append(Trial(self.transferRules, star, self))
+				j += 1
+				i += 1
+			star = star % 4 + 1
+			j = 0
 
 	def runBlock(self):
 		#loops through all the trials and records data
 		for trial in self.learningTrials:
 			trial.runTrial()
 			self.learningData.append(trial.getData())
+
+		breakScreen(win)
 
 		for trial in self.transferTrials:
 			trial.runTrial()
@@ -63,9 +64,9 @@ class HighTransferBlock(Block):
 		unlock it.
 		rules[0] are rules for middle layer, rules[1] for top layer."""
 		learningRules = [{1: (2, 3), 2: (4, 1), 3: (3, 1), 4: (2, 4)}, 
-		{1: (1, 3), 2: (4, 2)}]
+		{1: (1, 3), 2: (4, 2), 3: (2, 3), 4: (4, 1)}]
 		transferRules = [{1: (2, 3), 2: (4, 1), 3: (3, 1), 4: (2, 4)}, 
-		{1: (1, 4), 2: (3, 2)}]
+		{1: (1, 4), 2: (3, 2), 3: (2, 3), 4: (4, 1)}]
 		return learningRules, transferRules
 
 class LowTransferBlock(Block):
