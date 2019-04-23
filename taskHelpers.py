@@ -1,6 +1,8 @@
 from psychopy import visual, event
 import time
 
+BREAK_LEN = 60 #how long to break between blocks (seconds).
+
 def drawBlankTask(win):
 	"""Draws a blank template for a trial. This includes drawing
 	the machine, both stars, and the key history box."""
@@ -179,4 +181,4 @@ def breakScreen(win):
 		height = 50)
 	breakText.draw()
 	win.flip()
-	time.sleep(60)
+	time.sleep(BREAK_LEN)

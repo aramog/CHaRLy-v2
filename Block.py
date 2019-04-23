@@ -47,7 +47,7 @@ class Block:
 			trial.runTrial()
 			self.learningData.append(trial.getData())
 
-		breakScreen(win)
+		breakScreen(self.win)
 
 		for trial in self.transferTrials:
 			trial.runTrial()
