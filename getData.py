@@ -13,5 +13,4 @@ def makeJson(blocks, fileName):
 		res.append(data)
 	#saves as json
 	with open(fileName, 'w') as outfile:
-		json.dump(res, outfile)
-		
+		json.dump(res, outfile, sort_keys=True, indent=4, separators=(',', ': '))

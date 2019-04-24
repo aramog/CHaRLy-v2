@@ -1,7 +1,7 @@
 from psychopy import visual, event
 import time
 
-BREAK_LEN = 60 #how long to break between blocks (seconds).
+BREAK_LEN = 6 #how long to break between blocks (seconds).
 
 def drawBlankTask(win):
 	"""Draws a blank template for a trial. This includes drawing
@@ -170,6 +170,8 @@ def getKeys():
 		#raise Exception("Don't press more than 1 key at a time!")
 	if (keys[0] in keyMap):
 		return keyMap[keys[0]]
+	elif (keys[0] == "1"):
+		exit("Exit key pressed")
 	return -1
 
 def breakScreen(win):

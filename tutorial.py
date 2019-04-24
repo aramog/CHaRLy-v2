@@ -8,7 +8,7 @@ def instructionsScreen(win):
 	of the trial."""
 	header = visual.TextStim(
 		win = win,
-		text = "Instructions - Press any key to move to the next screen",
+		text = "Press any key to move on.",
 		pos = [0, 250],
 		color = [-1, -1, -1],
 		height = 30)

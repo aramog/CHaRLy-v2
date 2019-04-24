@@ -17,20 +17,23 @@ class Trial:
 		self.star = star
 		self.block = block
 		self.keys = None
+		self.rts = None
 		self.unlock = -1
 
 	def runTrial(self):
 		keyHist = [] #running cache of a trial's key presses
+		reactionTimes = [] #stores reaction times
 		#runs the sequence of updates to complete a 4 keystroke trial
-		self.updateWindow(keyHist)
-		self.updateWindow(keyHist)
-		self.updateWindow(keyHist)
-		self.updateWindow(keyHist)
+		self.updateWindow(keyHist, reactionTimes)
+		self.updateWindow(keyHist, reactionTimes)
+		self.updateWindow(keyHist, reactionTimes)
+		self.updateWindow(keyHist, reactionTimes)
 		#last screen possibly unlocks highest layer item and finishes trial
 		self.lastScreen(keyHist)
 		self.keys = keyHist
+		self.rts = reactionTimes
 
-	def updateWindow(self, keyHist):
+	def updateWindow(self, keyHist, reactionTimes):
 		"""Gets input from user and makes the env. react according to
 		the parameters of the trial."""
 		drawBlankTask(self.block.win) #sets up the screen
@@ -46,7 +49,9 @@ class Trial:
 		showKeys(self.block.win, keyHist) 
 		self.checkLowSeq(keyHist) #checks and shows if a machine part has been unlocked
 		self.block.win.flip() #display all changes to user
+		start = time.time()
 		keyHist.append(getKeys()) #get and record next key stroke.
+		reactionTimes.append(time.time() - start)
 
 	def lastScreen(self, keyHist):
 		"""Runs the last window for a trial, unlocking a highest layer 
@@ -96,6 +101,7 @@ class Trial:
 		starRules = self.flatStarRules()
 		print(starRules)
 		print(keyHist)
+		anyMatch = False
 		for j in range(len(starRules)):
 			match = True
 			#iterates over the keys in a rule
@@ -106,6 +112,7 @@ class Trial:
 					break
 			if match:
 				#means a star was unlocked
+				anyMatch = True
 				self.unlock = j + 1
 				if j == 0:
 					unlockStar(self.block.win, "assets/black-star.png")
@@ -127,6 +134,9 @@ class Trial:
 					elif j == 3:
 						highlightAndUnlock(self.block.win, "assets/gray-star.png")
 				break
+		if not anyMatch:
+			unlockStar(self.block.win, "assets/smoke.png")
+
 
 	def flatStarRules(self):
 		"""Returns a list of 2 4 action sequences associated with each star."""
@@ -160,8 +170,10 @@ class Trial:
 		res = {
 			"rules": [self.lowRules, self.highRules],
 			"key_press": self.keys,
+			"reaction_times": self.rts, 
 			"star": self.star,
 			"trial_type": "learning_sequence",
-			"points": self.block.points
+			"points": self.block.points,
+			"unlock": self.unlock
 		}
 		return res

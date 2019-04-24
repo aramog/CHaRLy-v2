@@ -7,9 +7,9 @@ from getData import makeJson
 FULL_SCREEN = True
 WINDOW_SIZE = [800, 800] #if not full screen, will use this window size
 RUN_TUTORIAL = False #whether to show the tutorial, false for testing
-STORE_DATA = False #turn off for testing
+STORE_DATA = True #turn off for testing
 LEARNING_TRIALS = 8
-TEST_TRIALS = 8
+TEST_TRIALS = 0
 LEN_STAR_RUNS = 2 #how long the interval for each star should be
 REACTIVE = True #whether env. is reactive
 
