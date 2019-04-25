@@ -1,8 +1,6 @@
 from psychopy import visual, event
 import time
 
-BREAK_LEN = 6 #how long to break between blocks (seconds).
-
 def drawBlankTask(win):
 	"""Draws a blank template for a trial. This includes drawing
 	the machine, both stars, and the key history box."""
@@ -165,7 +163,7 @@ def showKeys(win, keys):
 
 def getKeys():
 	keyMap = {"d": 1, "f": 2, "j": 3, "k": 4}
-	keys = event.waitKeys()
+	keys = event.waitKeys(keyList = ["d", "f", "j", "k", "1"])
 	#if (len(keys) > 1):
 		#raise Exception("Don't press more than 1 key at a time!")
 	if (keys[0] in keyMap):
@@ -177,10 +175,10 @@ def getKeys():
 def breakScreen(win):
 	breakText = visual.TextStim(
 		win = win,
-		text = "1 minute break",
+		text = "Enjoy a break from the task! Press any key when you're ready to continue.",
 		pos = [0, 0],
 		color = [-1, -1, -1],
-		height = 50)
+		height = 45)
 	breakText.draw()
 	win.flip()
-	time.sleep(BREAK_LEN)
+	event.waitKeys()

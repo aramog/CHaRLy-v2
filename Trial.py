@@ -137,7 +137,6 @@ class Trial:
 		if not anyMatch:
 			unlockStar(self.block.win, "assets/smoke.png")
 
-
 	def flatStarRules(self):
 		"""Returns a list of 2 4 action sequences associated with each star."""
 		rules = []
