@@ -6,10 +6,6 @@ def makeJson(blocks, fileName):
 	res = []
 	for block in blocks:
 		data = block.getData()
-		data = {
-			"learning": data[0],
-			"transfer": data[1]
-		}
 		res.append(data)
 	#saves as json
 	with open(fileName, 'w') as outfile:

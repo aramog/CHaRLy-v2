@@ -38,6 +38,20 @@ def blankScreen(win):
 	"""Wipes the screen inbetween trials."""
 	win.flip()
 
+def setGoalStar(win, star):
+	if (star == 1): #highlights correct star
+		highlightStar(win, "assets/black-star.png")
+	elif (star == 2):
+		highlightStar(win, "assets/orange-star.png")
+	elif (star == 3):
+		highlightStar(win, "assets/blue-star.png")
+	elif (star == 4):
+		highlightStar(win, "assets/gray-star.png")
+	elif (star == 5):
+		highlightStar(win, "assets/brown-star.png")
+	elif (star == 6):
+		highlightStar(win, "assets/cream-star.png")
+
 def drawGear(win, itemsOnScreen):
 	"""Draws the gear stimulus."""
 	if itemsOnScreen == 0:
@@ -175,10 +189,21 @@ def getKeys():
 def breakScreen(win):
 	breakText = visual.TextStim(
 		win = win,
-		text = "Enjoy a break from the task! Press any key when you're ready to continue.",
-		pos = [0, 0],
+		text = "Enjoy a break from the task! \n \n The goal star will now change color. \n \n Press any key when you're ready to start.",
+		pos = [0, 20],
 		color = [-1, -1, -1],
 		height = 45)
 	breakText.draw()
 	win.flip()
+	time.sleep(.5)
 	event.waitKeys()
+
+def spaceToContinue(win):
+	text = "[Press space to continue]"
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [0, -350],
+		color = [-1, -1, -1],
+		height = 25)
+	textStim.draw()

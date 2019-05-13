@@ -18,7 +18,7 @@ from taskHelpers import *
 
 
 def screen1(win):
-	text = "Your goal in this task is to earn points by unlocking stars"
+	text = "Your goal in this task is to earn points by unlocking stars."
 	textStim = visual.TextStim(
 		win = win,
 		text = text,
@@ -50,12 +50,13 @@ def screen1(win):
 		image = "assets/gray-star.png",
 		pos = [200, -200])
 	grayStar.draw()
-
+	
+	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
 def screen2(win):
-	text = "This machine can make stars"
+	text = "This machine can make stars."
 	textStim = visual.TextStim(
 		win = win,
 		text = text,
@@ -69,10 +70,11 @@ def screen2(win):
 		image = "assets/machine.jpg",
 		pos = [0, 0])
 	machine.draw()
+	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
-	text2 = "You can control the machine using the D, F, J, and K keys"
+	text2 = "You can control the machine using the D, F, J, and K keys."
 	textStim2 = visual.TextStim(
 		win = win,
 		text = text2,
@@ -82,6 +84,7 @@ def screen2(win):
 	textStim2.draw()
 	machine.draw()
 	textStim.draw()
+	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
@@ -123,6 +126,7 @@ def screen3(win):
 	drawBlankTask(win)
 	showKeys(win, keyPresses)
 	unlockStar(win, "assets/smoke.png")
+	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
@@ -143,7 +147,7 @@ def screen4(win):
 	def screen4Text2(win):
 		"""Shows the text instructions for the second screen
 		of the tutorial."""
-		text = "Nothing has happened yet, but remember that you need to use sequences of actions to unlock items. \n\n Try pressing K."
+		text = "Now try pressing K."
 		textStim = visual.TextStim(
 			win = win,
 			text = text,
@@ -156,7 +160,7 @@ def screen4(win):
 	def screen4Text3(win):
 		"""Shows the text instructions for the third screen
 		of the tutorial."""
-		text = "You’ve made a gear appear with the key combination DK! The machine will use these parts to create stars. \n \n Now try pressing J"
+		text = "A gear started spinning after you hit D and K! It seems like the machine started working on a star!\n \n Now try pressing J"
 		textStim = visual.TextStim(
 			win = win,
 			text = text,
@@ -182,7 +186,7 @@ def screen4(win):
 	def screen4Text5(win):
 		"""Shows the text instructions for the fifth screen
 		of the tutorial."""
-		text = "You’ve made a star appear to earn 100 points! \n \n Notice that a star is unlocked when you form some sequence of the machine's parts."
+		text = "A light turned on after you hit J and F! Then, a star popped out of the machine. Congratulations!"
 		textStim = visual.TextStim(
 			win = win,
 			text = text,
@@ -196,24 +200,25 @@ def screen4(win):
 	textStim = visual.TextStim(
 		win = win,
 		text = text,
-		pos = [0, 250],
+		pos = [0, 0],
 		color = [-1, -1, -1],
-		height = 30)
+		height = 50)
 	textStim.draw()
+	spaceToContinue(win)
+	win.flip()
+	event.waitKeys()
 
 	drawBlankTask(win)
 	screen4Text1(win)
 	win.flip()
 	event.waitKeys(keyList = ["d"])
 
-	textStim.draw()
 	drawBlankTask(win)
 	showKeys(win, ["d"])
 	screen4Text2(win)
 	win.flip()
 	event.waitKeys(keyList = ["k"])
 
-	textStim.draw()
 	drawBlankTask(win)
 	drawGear(win, 0)
 	showKeys(win, ["d", "k"])
@@ -221,7 +226,6 @@ def screen4(win):
 	win.flip()
 	event.waitKeys(keyList = ["j"])
 
-	textStim.draw()
 	drawBlankTask(win)
 	drawGear(win, 0)
 	showKeys(win, ["d", "k", "j"])
@@ -229,35 +233,36 @@ def screen4(win):
 	win.flip()
 	event.waitKeys(keyList = ["f"])
 
-	textStim.draw()
 	drawBlankTask(win)
 	unlockStar(win, "assets/black-star.png")
 	drawGear(win, 0)
 	drawLight(win, 1)
 	showKeys(win, ["d", "k", "j", "f"])
 	screen4Text5(win)
+	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
 def screen5(win):
-	text = "Do you have any questions?"
+	text = "The machine produces stars when you press the right sequence of keys. The window will help you figure out these sequences."
 	textStim = visual.TextStim(
 		win = win,
 		text = text,
 		pos = [0, 150],
 		color = [-1, -1, -1],
-		height = 50)
+		height = 40)
 	textStim.draw()
 
-	text2 = "Once you're ready to start, press any key to begin!"
+	text2 = "Do you have any questions?"
 	textStim2 = visual.TextStim(
 		win = win,
 		text = text2,
 		pos = [0, -200],
 		color = [-1, -1, -1],
-		height = 50)
+		height = 40)
 	textStim2.draw()
-
+	
+	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 

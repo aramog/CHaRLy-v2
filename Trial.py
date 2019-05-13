@@ -9,7 +9,7 @@ HOLD_SCREEN_TIME = .8 #how long to leave the last screen of a trial up
 WAIT_TIME = .3 #inter trial interval
 
 class Trial:
-	def __init__(self, rules, star, block):
+	def __init__(self, rules, star, block, label):
 		#unpacks rules into instance vars
 		self.lowRules = rules[0]
 		self.highRules = rules[1]
@@ -19,6 +19,7 @@ class Trial:
 		self.keys = None
 		self.rts = None
 		self.unlock = -1
+		self.label = label
 
 	def runTrial(self):
 		keyHist = [] #running cache of a trial's key presses
@@ -37,14 +38,7 @@ class Trial:
 		"""Gets input from user and makes the env. react according to
 		the parameters of the trial."""
 		drawBlankTask(self.block.win) #sets up the screen
-		if (self.star == 1): #highlights correct star
-			highlightStar(self.block.win, "assets/black-star.png")
-		elif (self.star == 2):
-			highlightStar(self.block.win, "assets/orange-star.png")
-		elif (self.star == 3):
-			highlightStar(self.block.win, "assets/blue-star.png")
-		else:
-			highlightStar(self.block.win, "assets/gray-star.png")
+		setGoalStar(self.block.win, self.star)
 		pointCounter(self.block.win, self.block.points) #shows current points
 		showKeys(self.block.win, keyHist) 
 		self.checkLowSeq(keyHist) #checks and shows if a machine part has been unlocked
@@ -57,14 +51,7 @@ class Trial:
 		"""Runs the last window for a trial, unlocking a highest layer 
 		item if the sequence was correct."""
 		drawBlankTask(self.block.win)
-		if (self.star == 1): #highlights correct star
-			highlightStar(self.block.win, "assets/black-star.png")
-		elif (self.star == 2):
-			highlightStar(self.block.win, "assets/orange-star.png")
-		elif (self.star == 3):
-			highlightStar(self.block.win, "assets/blue-star.png")
-		else:
-			highlightStar(self.block.win, "assets/gray-star.png")
+		setGoalStar(self.block.win, self.star)
 		showKeys(self.block.win, keyHist)
 		self.checkLowSeq(keyHist)
 		self.checkHighSeq(keyHist)
@@ -115,14 +102,30 @@ class Trial:
 				anyMatch = True
 				self.unlock = j + 1
 				if j == 0:
-					unlockStar(self.block.win, "assets/black-star.png")
+					if (self.label == "pos_transfer"):
+						unlockStar(self.block.win, "assets/brown-star.png")
+					else:
+						unlockStar(self.block.win, "assets/black-star.png")
 				elif j == 1:
-					unlockStar(self.block.win, "assets/orange-star.png")
+					if (self.label == "pos_transfer"):
+						unlockStar(self.block.win, "assets/cream-star.png")
+					else:
+						unlockStar(self.block.win, "assets/orange-star.png")
 				elif j == 2:
 					unlockStar(self.block.win, "assets/blue-star.png")
 				elif j == 3:
 					unlockStar(self.block.win, "assets/gray-star.png")
+				
 				#now check if we add points
+				if (self.label == "pos_transfer"):
+					if j + 5 == self.star:
+						self.block.points += POINTS_PER_STAR
+						if j == 0:
+							highlightAndUnlock(self.block.win, "assets/brown-star.png")
+						elif j == 1:
+							highlightAndUnlock(self.block.win, "assets/cream-star.png")
+					break
+
 				if j + 1 == self.star:
 					self.block.points += POINTS_PER_STAR
 					if j == 0:
@@ -134,6 +137,7 @@ class Trial:
 					elif j == 3:
 						highlightAndUnlock(self.block.win, "assets/gray-star.png")
 				break
+
 		if not anyMatch:
 			unlockStar(self.block.win, "assets/smoke.png")
 
@@ -171,7 +175,7 @@ class Trial:
 			"key_press": self.keys,
 			"reaction_times": self.rts, 
 			"star": self.star,
-			"trial_type": "learning_sequence",
+			"trial_type": self.label,
 			"points": self.block.points,
 			"unlock": self.unlock
 		}
