@@ -97,49 +97,42 @@ class Trial:
 					#if key hist doesn't match rule, not a match
 					match = False
 					break
+			
 			if match:
 				#means a star was unlocked
 				anyMatch = True
 				self.unlock = j + 1
 				if j == 0:
-					if (self.label == "pos_transfer"):
-						unlockStar(self.block.win, "assets/brown-star.png")
-					else:
-						unlockStar(self.block.win, "assets/black-star.png")
+					unlockStar(self.block.win, "./assets/black-star.png")
 				elif j == 1:
-					if (self.label == "pos_transfer"):
-						unlockStar(self.block.win, "assets/cream-star.png")
-					else:
-						unlockStar(self.block.win, "assets/orange-star.png")
+					unlockStar(self.block.win, "./assets/orange-star.png")
 				elif j == 2:
-					unlockStar(self.block.win, "assets/blue-star.png")
+					unlockStar(self.block.win, "./assets/blue-star.png")
 				elif j == 3:
-					unlockStar(self.block.win, "assets/gray-star.png")
-				
-				#now check if we add points
-				if (self.label == "pos_transfer"):
-					if j + 5 == self.star:
-						self.block.points += POINTS_PER_STAR
-						if j == 0:
-							highlightAndUnlock(self.block.win, "assets/brown-star.png")
-						elif j == 1:
-							highlightAndUnlock(self.block.win, "assets/cream-star.png")
-					break
+					unlockStar(self.block.win, "./assets/gray-star.png")
+				elif j == 4:
+					unlockStar(self.block.win, "./assets/brown-star.png")
+				elif j == 5:
+					unlockStar(self.block.win, "./assets/cream-star.png")
 
 				if j + 1 == self.star:
 					self.block.points += POINTS_PER_STAR
 					if j == 0:
-						highlightAndUnlock(self.block.win, "assets/black-star.png")
+						highlightAndUnlock(self.block.win, "./assets/black-star.png")
 					elif j == 1:
-						highlightAndUnlock(self.block.win, "assets/orange-star.png")
+						highlightAndUnlock(self.block.win, "./assets/orange-star.png")
 					elif j == 2:
-						highlightAndUnlock(self.block.win, "assets/blue-star.png")
+						highlightAndUnlock(self.block.win, "./assets/blue-star.png")
 					elif j == 3:
-						highlightAndUnlock(self.block.win, "assets/gray-star.png")
+						highlightAndUnlock(self.block.win, "./assets/gray-star.png")
+					elif j == 4:
+						highlightAndUnlock(self.block.win, "./assets/brown-star.png")
+					elif j == 5:
+						highlightAndUnlock(self.block.win, "./assets/cream-star.png")
 				break
 
 		if not anyMatch:
-			unlockStar(self.block.win, "assets/smoke.png")
+			unlockStar(self.block.win, "./assets/smoke.png")
 
 	def flatStarRules(self):
 		"""Returns a list of 2 4 action sequences associated with each star."""

@@ -85,7 +85,7 @@ class HighTransferBlock(Block):
 		{1: (1, 2), 2: (2, 4), 3: (3, 1), 4: (3, 4)}]
 		#TODO: Might need to update these rules
 		posTransferRules = [{1: (2, 4), 2: (2, 3), 3: (3, 1), 4: (4, 1)},
-		{5: (2, 3), 6: (4, 1)}]
+		{1: (1, 2), 2: (2, 3), 3: (4, 1), 4: (3, 4), 5: (1, 4), 6: (3, 2)}]
 		return learningRules, negTransferRules, posTransferRules
 
 class LowTransferBlock(Block):

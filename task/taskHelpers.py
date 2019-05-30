@@ -6,7 +6,7 @@ def drawBlankTask(win):
 	the machine, both stars, and the key history box."""
 	machine = visual.ImageStim(
 		win = win,
-		image = "assets/machine.jpg")
+		image = "./assets/machine.jpg")
 	machine.draw()
 
 	window_cover = visual.Rect(
@@ -40,17 +40,17 @@ def blankScreen(win):
 
 def setGoalStar(win, star):
 	if (star == 1): #highlights correct star
-		highlightStar(win, "assets/black-star.png")
+		highlightStar(win, "./assets/black-star.png")
 	elif (star == 2):
-		highlightStar(win, "assets/orange-star.png")
+		highlightStar(win, "./assets/orange-star.png")
 	elif (star == 3):
-		highlightStar(win, "assets/blue-star.png")
+		highlightStar(win, "./assets/blue-star.png")
 	elif (star == 4):
-		highlightStar(win, "assets/gray-star.png")
+		highlightStar(win, "./assets/gray-star.png")
 	elif (star == 5):
-		highlightStar(win, "assets/brown-star.png")
+		highlightStar(win, "./assets/brown-star.png")
 	elif (star == 6):
-		highlightStar(win, "assets/cream-star.png")
+		highlightStar(win, "./assets/cream-star.png")
 
 def drawGear(win, itemsOnScreen):
 	"""Draws the gear stimulus."""
@@ -60,7 +60,7 @@ def drawGear(win, itemsOnScreen):
 		x = 0
 	gear = visual.ImageStim(
 		win = win,
-		image = "assets/gear.jpg",
+		image = "./assets/gear.jpg",
 		pos = [x, -40])
 	gear.size = [gear.size[0] * .7, gear.size[1] * .7]
 	gear.draw()
@@ -73,7 +73,7 @@ def drawLight(win, itemsOnScreen):
 		x = 0
 	light = visual.ImageStim(
 		win = win,
-		image = "assets/light.jpg",
+		image = "./assets/light.jpg",
 		pos = [x, -40])
 	light.size = [light.size[0] * .7, light.size[1] * .7]
 	light.draw()
@@ -86,7 +86,7 @@ def drawPower(win, itemsOnScreen):
 		x = 0
 	power = visual.ImageStim(
 		win = win,
-		image = "assets/power.jpg",
+		image = "./assets/power.jpg",
 		pos = [x, -40])
 	power.size = [power.size[0] * .07, power.size[1] * .07]
 	power.draw()
@@ -99,7 +99,7 @@ def drawFan(win, itemsOnScreen):
 		x = 0
 	fan = visual.ImageStim(
 		win = win,
-		image = "assets/fan.jpg",
+		image = "./assets/fan.jpg",
 		pos = [x, -40])
 	fan.size = [fan.size[0] * .1, fan.size[1] * .1]
 	fan.draw()
@@ -160,7 +160,7 @@ def showKeys(win, keys):
 		if keys[i] != "NA":
 			keyText = visual.ImageStim(
 				win = win,
-				image = "assets/" + keys[i] + ".png",
+				image = "./assets/" + keys[i] + ".png",
 				pos = [-95 + i*60, -250])
 			keyText.size = [keyText.size[0] * .25, keyText.size[1] * .25]
 		else:

@@ -29,25 +29,25 @@ def screen1(win):
 
 	blueStar = visual.ImageStim(
 		win = win,
-		image = "assets/blue-star.png",
+		image = "./assets/blue-star.png",
 		pos = [-200, -75])
 	blueStar.draw()
 	
 	orangeStar = visual.ImageStim(
 		win = win,
-		image = "assets/orange-star.png",
+		image = "./assets/orange-star.png",
 		pos = [-65, -200])
 	orangeStar.draw()
 
 	blackStar = visual.ImageStim(
 		win = win,
-		image = "assets/black-star.png",
+		image = "./assets/black-star.png",
 		pos = [65, -75])
 	blackStar.draw()
 
 	grayStar = visual.ImageStim(
 		win = win,
-		image = "assets/gray-star.png",
+		image = "./assets/gray-star.png",
 		pos = [200, -200])
 	grayStar.draw()
 	
@@ -67,7 +67,7 @@ def screen2(win):
 
 	machine = visual.ImageStim(
 		win = win,
-		image = "assets/machine.jpg",
+		image = "./assets/machine.jpg",
 		pos = [0, 0])
 	machine.draw()
 	spaceToContinue(win)
@@ -125,12 +125,23 @@ def screen3(win):
 	textStim.draw()
 	drawBlankTask(win)
 	showKeys(win, keyPresses)
-	unlockStar(win, "assets/smoke.png")
+	unlockStar(win, "./assets/smoke.png")
 	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
 def screen4(win):
+	def screen4Text0(win):
+		text = "You earn points by unlocking the star in the box."
+		textStim = visual.TextStim(
+			win = win,
+			text = text,
+			pos = [-500, 0],
+			color = [-1, -1, -1],
+			height = 30,
+			wrapWidth = 275)
+		textStim.draw()
+
 	def screen4Text1(win):
 		"""Shows the text instructions for the first screen
 		of the tutorial."""
@@ -209,17 +220,27 @@ def screen4(win):
 	event.waitKeys()
 
 	drawBlankTask(win)
+	setGoalStar(win, 1)
+	spaceToContinue(win)
+	screen4Text0(win)
+	win.flip()
+	event.waitKeys()
+
+	drawBlankTask(win)
+	setGoalStar(win, 1)
 	screen4Text1(win)
 	win.flip()
 	event.waitKeys(keyList = ["d"])
 
 	drawBlankTask(win)
+	setGoalStar(win, 1)
 	showKeys(win, ["d"])
 	screen4Text2(win)
 	win.flip()
 	event.waitKeys(keyList = ["k"])
 
 	drawBlankTask(win)
+	setGoalStar(win, 1)
 	drawGear(win, 0)
 	showKeys(win, ["d", "k"])
 	screen4Text3(win)
@@ -227,6 +248,7 @@ def screen4(win):
 	event.waitKeys(keyList = ["j"])
 
 	drawBlankTask(win)
+	setGoalStar(win, 1)
 	drawGear(win, 0)
 	showKeys(win, ["d", "k", "j"])
 	screen4Text4(win)
@@ -234,7 +256,8 @@ def screen4(win):
 	event.waitKeys(keyList = ["f"])
 
 	drawBlankTask(win)
-	unlockStar(win, "assets/black-star.png")
+	highlightAndUnlock(win, "./assets/black-star.png")
+	unlockStar(win, "./assets/black-star.png")
 	drawGear(win, 0)
 	drawLight(win, 1)
 	showKeys(win, ["d", "k", "j", "f"])
@@ -261,7 +284,7 @@ def screen5(win):
 		color = [-1, -1, -1],
 		height = 40)
 	textStim2.draw()
-	
+
 	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
