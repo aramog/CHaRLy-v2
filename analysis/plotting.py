@@ -1,6 +1,12 @@
 from Subject import *
 
 import matplotlib.pyplot as plt
+import numpy as np
+
+def get_subj(num):
+	"""Returns the subject object associated with num."""
+	path = "./data/subj" + str(num) + ".json"
+	return Subject(path)
 
 def plot_item_seq(block, axs = plt, xtick_spacing = 4):
 	if axs is plt:
@@ -62,3 +68,59 @@ def check_unlock(presses, rules):
 		if value == presses:
 			return key
 	return -1
+
+def item_seq_rts(block):
+	"""Plots a bar for average rt for start seq,
+	finish seq, and no seq key strokes.
+	start seq: first stroke in a two key combo to unlock
+	a middle layer item.
+	finish seq: second stroke in a two ""
+	no seq: none of the above two."""
+	avgs, sem = seq_rts(block)
+	plt.bar(range(3), avgs,
+		tick_label=["Start Sequence", "Finish Sequence", "No Sequence"], yerr = sem)
+	plt.ylabel("Average RT")
+	plt.show()
+
+def seq_rts(block):
+	"""Returns the average reaction time for each of the
+	types of key sequences."""
+	no, start, finish = [], [], []
+	for trial in block:
+		for i in range(4):
+			seq = seq_type(trial, i)
+			if seq == 0:
+				#means start seq
+				start.append(trial.reaction_times[i])
+			elif seq == 1:
+				#finish seq
+				finish.append(trial.reaction_times[i])
+			else:
+				#non seq
+				no.append(trial.reaction_times[i])
+	avgs = [np.mean(start), np.mean(finish), np.mean(no)]
+	root_n = np.sqrt(len(block))
+	sem = [np.std(start) / root_n, np.std(finish) / root_n, np.std(no) / root_n]
+	return avgs, sem
+
+def seq_type(trial, i):
+	"""Returns the key press seq type where
+	0: finish seq
+	1: start seq
+	2: non seq"""
+	rules = trial.rules[0]
+	rules = [rule for key, rule in rules.items()]
+	if i == 0 or i == 2:
+		#means we only have start seq
+		seq = [trial.keys[i], trial.keys[i + 1]]
+		if seq in rules:
+			return 0
+		else:
+			return 2
+	else:
+		#only finish seq
+		seq = [trial.keys[i - 1], trial.keys[i]]
+		if seq in rules:
+			return 1
+		else:
+			return 2

@@ -16,8 +16,9 @@ class Block:
 		self.data = []
 		
 		self.learningTrials = []
-		learningStarSeq = [2, 3, 2, 3, 1, 4, 1, 4, 
-			1, 2, 1, 2, 3, 4, 3, 4]
+		"""learningStarSeq = [2, 3, 2, 3, 1, 4, 1, 4, 
+									1, 2, 1, 2, 3, 4, 3, 4]"""
+		learningStarSeq = [2, 3, 2, 3, 1, 4, 1, 4]
 		learningStarSeq.extend(self.randomOrder())
 		self.makeTrials(
 			self.learningTrials, learningStarSeq, self.learningRules, "learning")

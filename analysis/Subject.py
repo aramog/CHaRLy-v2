@@ -1,7 +1,6 @@
 import json
 
 class Subject:
-	
 	class Trial:
 		def __init__(self, trial_dict):
 			self.process_trial(trial_dict)
