@@ -2,6 +2,9 @@ from taskHelpers import *
 from Trial import *
 
 from psychopy import visual
+import numpy as np
+
+TRANSFER_STARS = [1, 2] #stars that change during neg transfer.
 
 class Block:
 	"""Generic block class. Initializes all rules and trials for
@@ -72,7 +75,24 @@ class Block:
 	def randomOrder(self):
 		"""Returns a random star order for part of the
 		learning phase."""
-		return [2, 1, 3, 4, 3, 2, 4, 1]
+		def random_subblock():
+			"""Returns a random permutation of 4 trials st no two transfer stars are consecutive."""
+			perm = np.random.permutation(range(1, 5))
+			for i in range(3):
+				#makes sure no two transfer stars are consecutive within a subblock
+				if perm[i] in TRANSFER_STARS and perm[i + 1] in TRANSFER_STARS:
+					return random_subblock()
+			return perm
+		sb1 = random_subblock()
+		sb2 = random_subblock()
+		#no consecutive same stars or transfer stars
+		if sb1[3] in TRANSFER_STARS and sb2[0] in TRANSFER_STARS:
+			return self.randomOrder()
+		if sb1[3] == sb2[0]:
+			return self.randomOrder()
+		res = [x for x in sb1]
+		res.extend([y for y in sb2])
+		return res
 
 class HighTransferBlock(Block):
 	def getRules(self):
@@ -83,10 +103,10 @@ class HighTransferBlock(Block):
 		learningRules = [{1: (2, 4), 2: (2, 3), 3: (3, 1), 4: (4, 1)},
 		{1: (1, 2), 2: (2, 3), 3: (4, 1), 4: (3, 4)}]
 		negTransferRules = [{1: (2, 4), 2: (2, 3), 3: (3, 1), 4: (4, 1)},
-		{1: (1, 2), 2: (2, 4), 3: (3, 1), 4: (3, 4)}]
+		{1: (3, 2), 2: (2, 1), 3: (4, 1), 4: (3, 4)}]
 		#TODO: Might need to update these rules
 		posTransferRules = [{1: (2, 4), 2: (2, 3), 3: (3, 1), 4: (4, 1)},
-		{1: (1, 2), 2: (2, 3), 3: (4, 1), 4: (3, 4), 5: (1, 4), 6: (3, 2)}]
+		{1: (1, 2), 2: (2, 3), 3: (4, 1), 4: (3, 4), 5: (1, 3), 6: (2, 4)}]
 		return learningRules, negTransferRules, posTransferRules
 
 class LowTransferBlock(Block):
