@@ -86,8 +86,6 @@ class Trial:
 		"""Checks if a user unlocked a star. Awards points if correct star"""
 		#gets the flat rules to compare to keyHist
 		starRules = self.flatStarRules()
-		print(starRules)
-		print(keyHist)
 		anyMatch = False
 		for j in range(len(starRules)):
 			match = True
