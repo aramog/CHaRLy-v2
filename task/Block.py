@@ -100,13 +100,14 @@ class HighTransferBlock(Block):
 		, and values the correct action sequence of lower level items needed to
 		unlock it.
 		rules[0] are rules for middle layer, rules[1] for top layer."""
-		learningRules = [{1: (2, 4), 2: (2, 3), 3: (3, 1), 4: (4, 1)},
-		{1: (1, 2), 2: (2, 3), 3: (4, 1), 4: (3, 4)}]
-		negTransferRules = [{1: (2, 4), 2: (2, 3), 3: (3, 1), 4: (4, 1)},
-		{1: (3, 2), 2: (2, 1), 3: (4, 1), 4: (3, 4)}]
+		middle_rules = {1: (2, 3), 2: (4, 2), 3: (3, 1), 4: (1, 4)}
+		learningRules = [middle_rules,
+		{1: (2, 3), 2: (1, 4), 3: (3, 1), 4: (4, 2)}]
+		negTransferRules = [middle_rules,
+		{1: (4, 3), 2: (1, 2), 3: (3, 1), 4: (4, 2)}]
 		#TODO: Might need to update these rules
-		posTransferRules = [{1: (2, 4), 2: (2, 3), 3: (3, 1), 4: (4, 1)},
-		{1: (1, 2), 2: (2, 3), 3: (4, 1), 4: (3, 4), 5: (1, 3), 6: (2, 4)}]
+		posTransferRules = [middle_rules,
+		{1: (2, 3), 2: (1, 4), 3: (3, 1), 4: (4, 2), 5: (3, 4), 6: (2, 1)}]
 		return learningRules, negTransferRules, posTransferRules
 
 class LowTransferBlock(Block):

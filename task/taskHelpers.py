@@ -1,22 +1,28 @@
 from psychopy import visual, event
 import time
 
-def drawBlankTask(win):
+def drawBlankTask(win, tutorial = False):
 	"""Draws a blank template for a trial. This includes drawing
 	the machine, both stars, and the key history box."""
-	machine = visual.ImageStim(
-		win = win,
-		image = "./assets/machine.jpg")
+	if tutorial:
+		machine = visual.ImageStim(
+			win = win,
+			image = "./assets/tutorial/machine.png")
+		machine.size = [machine.size[0] * .7, machine.size[0] * .7]
+	else:
+		machine = visual.ImageStim(
+			win = win,
+			image = "./assets/machine.jpg")
 	machine.draw()
 
-	window_cover = visual.Rect(
-		win = win,
-		fillColor = [1, 1, 1],
-		pos = [-35, -40],
-		width = 135,
-		height = 65)
-	window_cover.draw()
-
+	if not tutorial:
+		window_cover = visual.Rect(
+			win = win,
+			fillColor = [1, 1, 1],
+			pos = [-35, -40],
+			width = 135,
+			height = 65)
+		window_cover.draw()
 	key_hist = visual.Rect(
 		win = win,
 		width = 250,
@@ -51,6 +57,9 @@ def setGoalStar(win, star):
 		highlightStar(win, "./assets/brown-star.png")
 	elif (star == 6):
 		highlightStar(win, "./assets/cream-star.png")
+
+def setGoalCoin(win):
+	highlightStar(win, "./assets/tutorial/coin.png")
 
 def drawGear(win, itemsOnScreen):
 	"""Draws the gear stimulus."""
@@ -104,6 +113,22 @@ def drawFan(win, itemsOnScreen):
 	fan.size = [fan.size[0] * .1, fan.size[1] * .1]
 	fan.draw()
 
+def drawHammer(win):
+	hammer = visual.ImageStim(
+			win = win,
+			image = "./assets/tutorial/hammer.png",
+			pos = [-60, 30])
+	hammer.size = [hammer.size[0] * .1, hammer.size[1] * .1]
+	hammer.draw()
+
+def drawChisel(win):
+	chisel = visual.ImageStim(
+			win = win,
+			image = "./assets/tutorial/chisel.png",
+			pos = [60, 30])
+	chisel.size = [chisel.size[0] * .5, chisel.size[1] * .5]
+	chisel.draw()
+
 def highlightStar(win, img):
 	star = visual.ImageStim(
 		win = win,
@@ -125,6 +150,14 @@ def unlockStar(win, img):
 		win = win,
 		image = img,
 		pos = [-100, -150])
+	star.draw()
+
+def unlockCoin(win, img):
+	"""Same logic as unlockStar, but for the tutorial machine."""
+	star = visual.ImageStim(
+		win = win,
+		image = img,
+		pos = [100, -150])
 	star.draw()
  
 def highlightAndUnlock(win, img):
@@ -175,6 +208,37 @@ def showKeys(win, keys):
 	for keyText in keyStims:
 		keyText.draw()
 
+def showKeysTutorial(win, keys):
+	"""Will display all entries of keys (list of chars) in the 
+	key stroke box. Assumes first entry of keys was first key 
+	pressed in the trial."""
+	keys = keys.copy()
+	if (keys and type(keys[0]) == int):
+		#need to convert to letters
+		keyMap = {1: "u", 2: "i", 3: "o", 4: "p"}
+		for i in range(len(keys)):
+			keys[i] = keyMap[keys[i]]
+	keyStims = []
+	for i in range(len(keys)):
+		#create the text
+		if keys[i] != "NA":
+			keyText = visual.ImageStim(
+				win = win,
+				image = "./assets/tutorial/" + keys[i] + ".png",
+				pos = [-95 + i*60, -250])
+			keyText.size = [keyText.size[0] * .25, keyText.size[1] * .25]
+		else:
+			keyText = visual.TextStim(
+			win = win,
+			text = keys[i].upper(),
+			pos = [-95 + i*60, -250],
+			color = [-1, -1, -1])
+		#add key to the list
+		keyStims.append(keyText)
+
+	for keyText in keyStims:
+		keyText.draw()
+
 def getKeys():
 	keyMap = {"d": 1, "f": 2, "j": 3, "k": 4}
 	keys = event.waitKeys(keyList = ["d", "f", "j", "k", "1"])
@@ -185,6 +249,11 @@ def getKeys():
 	elif (keys[0] == "1"):
 		exit("Exit key pressed")
 	return -1
+
+def getKeysTutorial():
+	keyMap = {"u": 1, "i": 2, "o": 3, "p": 4}
+	keys = event.waitKeys(keyList = ["u", "i", "o", "p"])
+	return keyMap[keys[0]]
 
 def breakScreen(win):
 	breakText = visual.TextStim(

@@ -1,9 +1,9 @@
 """
 The tutorial is organized by the screens that the user sees:
-screen1: Goal is to collect stars
-screen2: Machince is how you make those stars
+screen1: Goal is to collect coins
+screen2: Machince is how you make those coins
 screen3: Interact with machine to produce smoke
-screen4: Interact with machine to produce star
+screen4: Interact with machine to produce coin
 screen5: Questions?
 
 runTutorial: main function that runs all screens in the
@@ -18,7 +18,7 @@ from taskHelpers import *
 
 
 def screen1(win):
-	text = "Your goal in this task is to earn points by unlocking stars."
+	text = "Your goal in this task is to earn points by unlocking coins."
 	textStim = visual.TextStim(
 		win = win,
 		text = text,
@@ -27,36 +27,36 @@ def screen1(win):
 		height = 50)
 	textStim.draw()
 
-	blueStar = visual.ImageStim(
+	bluecoin = visual.ImageStim(
 		win = win,
-		image = "./assets/blue-star.png",
+		image = "assets/tutorial/coin.png",
 		pos = [-200, -75])
-	blueStar.draw()
+	bluecoin.draw()
 	
-	orangeStar = visual.ImageStim(
+	orangecoin = visual.ImageStim(
 		win = win,
-		image = "./assets/orange-star.png",
+		image = "assets/tutorial/coin.png",
 		pos = [-65, -200])
-	orangeStar.draw()
+	orangecoin.draw()
 
-	blackStar = visual.ImageStim(
+	blackcoin = visual.ImageStim(
 		win = win,
-		image = "./assets/black-star.png",
+		image = "assets/tutorial/coin.png",
 		pos = [65, -75])
-	blackStar.draw()
+	blackcoin.draw()
 
-	grayStar = visual.ImageStim(
+	graycoin = visual.ImageStim(
 		win = win,
-		image = "./assets/gray-star.png",
+		image = "assets/tutorial/coin.png",
 		pos = [200, -200])
-	grayStar.draw()
+	graycoin.draw()
 	
 	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
 def screen2(win):
-	text = "This machine can make stars."
+	text = "This machine can make coins."
 	textStim = visual.TextStim(
 		win = win,
 		text = text,
@@ -67,20 +67,20 @@ def screen2(win):
 
 	machine = visual.ImageStim(
 		win = win,
-		image = "./assets/machine.jpg",
+		image = "assets/tutorial/machine.png",
 		pos = [0, 0])
 	machine.draw()
 	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
-	text2 = "You can control the machine using the D, F, J, and K keys."
+	text2 = "You can control the machine using the U, I, O, and P keys."
 	textStim2 = visual.TextStim(
 		win = win,
 		text = text2,
-		pos = [0, -260],
+		pos = [0, -300],
 		color = [-1, -1, -1],
-		height = 40)
+		height = 30)
 	textStim2.draw()
 	machine.draw()
 	textStim.draw()
@@ -100,39 +100,39 @@ def screen3(win):
 
 	keyPresses = []
 
-	drawBlankTask(win)
+	drawBlankTask(win, True)
 	win.flip()
-	keyPresses.append(getKeys())
+	keyPresses.append(getKeysTutorial())
 
 	textStim.draw()
-	drawBlankTask(win)
-	showKeys(win, keyPresses)
+	drawBlankTask(win, True)
+	showKeysTutorial(win, keyPresses)
 	win.flip()
-	keyPresses.append(getKeys())
+	keyPresses.append(getKeysTutorial())
 	
 	textStim.draw()
-	drawBlankTask(win)
-	showKeys(win, keyPresses)
+	drawBlankTask(win, True)
+	showKeysTutorial(win, keyPresses)
 	win.flip()
-	keyPresses.append(getKeys())
+	keyPresses.append(getKeysTutorial())
 
 	textStim.draw()
-	drawBlankTask(win)
-	showKeys(win, keyPresses)
+	drawBlankTask(win, True)
+	showKeysTutorial(win, keyPresses)
 	win.flip()
-	keyPresses.append(getKeys())
+	keyPresses.append(getKeysTutorial())
 
 	textStim.draw()
-	drawBlankTask(win)
-	showKeys(win, keyPresses)
-	unlockStar(win, "./assets/smoke.png")
+	drawBlankTask(win, True)
+	showKeysTutorial(win, keyPresses)
+	unlockCoin(win, "assets/smoke.png")
 	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
 def screen4(win):
 	def screen4Text0(win):
-		text = "You earn points by unlocking the star in the box."
+		text = "You earn points by unlocking the coin in the box."
 		textStim = visual.TextStim(
 			win = win,
 			text = text,
@@ -145,7 +145,7 @@ def screen4(win):
 	def screen4Text1(win):
 		"""Shows the text instructions for the first screen
 		of the tutorial."""
-		text = "To start, try pressing the D key."
+		text = "To start, try pressing the I key."
 		textStim = visual.TextStim(
 			win = win,
 			text = text,
@@ -158,7 +158,7 @@ def screen4(win):
 	def screen4Text2(win):
 		"""Shows the text instructions for the second screen
 		of the tutorial."""
-		text = "Now try pressing K."
+		text = "Now try pressing O."
 		textStim = visual.TextStim(
 			win = win,
 			text = text,
@@ -171,7 +171,7 @@ def screen4(win):
 	def screen4Text3(win):
 		"""Shows the text instructions for the third screen
 		of the tutorial."""
-		text = "A gear started spinning after you hit D and K! It seems like the machine started working on a star!\n \n Now try pressing J"
+		text = "A hammer started shaping a coin. Seems like we're on the right track! \n \n Now try pressing U"
 		textStim = visual.TextStim(
 			win = win,
 			text = text,
@@ -184,7 +184,7 @@ def screen4(win):
 	def screen4Text4(win):
 		"""Shows the text instructions for the fourth screen
 		of the tutorial."""
-		text = "Now try pressing F."
+		text = "Now try pressing P."
 		textStim = visual.TextStim(
 			win = win,
 			text = text,
@@ -197,7 +197,7 @@ def screen4(win):
 	def screen4Text5(win):
 		"""Shows the text instructions for the fifth screen
 		of the tutorial."""
-		text = "A light turned on after you hit J and F! Then, a star popped out of the machine. Congratulations!"
+		text = "A chisel started working after you pressed U and P! Then, a coin popped out of the machine. Congratulations!"
 		textStim = visual.TextStim(
 			win = win,
 			text = text,
@@ -207,7 +207,7 @@ def screen4(win):
 			wrapWidth = 350)
 		textStim.draw()
 	
-	text = "Unlocking stars can be hard! Luckily for you, this machine has a window so you can see how it works."
+	text = "Unlocking coins can be hard! Luckily for you, this machine will show you the tools it's using as it makes the coins. This will help you figure out if you're on the right track."
 	textStim = visual.TextStim(
 		win = win,
 		text = text,
@@ -219,55 +219,55 @@ def screen4(win):
 	win.flip()
 	event.waitKeys()
 
-	drawBlankTask(win)
-	setGoalStar(win, 1)
+	drawBlankTask(win, True)
+	setGoalCoin(win)
 	spaceToContinue(win)
 	screen4Text0(win)
 	win.flip()
 	event.waitKeys()
 
-	drawBlankTask(win)
-	setGoalStar(win, 1)
+	drawBlankTask(win, True)
+	setGoalCoin(win)
 	screen4Text1(win)
 	win.flip()
-	event.waitKeys(keyList = ["d"])
+	event.waitKeys(keyList = ["i"])
 
-	drawBlankTask(win)
-	setGoalStar(win, 1)
-	showKeys(win, ["d"])
+	drawBlankTask(win, True)
+	setGoalCoin(win)
+	showKeysTutorial(win, ["i"])
 	screen4Text2(win)
 	win.flip()
-	event.waitKeys(keyList = ["k"])
+	event.waitKeys(keyList = ["o"])
 
-	drawBlankTask(win)
-	setGoalStar(win, 1)
-	drawGear(win, 0)
-	showKeys(win, ["d", "k"])
+	drawBlankTask(win, True)
+	setGoalCoin(win)
+	drawHammer(win)
+	showKeysTutorial(win, ["i", "o"])
 	screen4Text3(win)
 	win.flip()
-	event.waitKeys(keyList = ["j"])
+	event.waitKeys(keyList = ["u"])
 
-	drawBlankTask(win)
-	setGoalStar(win, 1)
-	drawGear(win, 0)
-	showKeys(win, ["d", "k", "j"])
+	drawBlankTask(win, True)
+	setGoalCoin(win)
+	drawHammer(win)
+	showKeysTutorial(win, ["i", "o", "u"])
 	screen4Text4(win)
 	win.flip()
-	event.waitKeys(keyList = ["f"])
+	event.waitKeys(keyList = ["p"])
 
-	drawBlankTask(win)
-	highlightAndUnlock(win, "./assets/black-star.png")
-	unlockStar(win, "./assets/black-star.png")
-	drawGear(win, 0)
-	drawLight(win, 1)
-	showKeys(win, ["d", "k", "j", "f"])
+	drawBlankTask(win, True)
+	highlightAndUnlock(win, "assets/tutorial/coin.png")
+	unlockCoin(win, "assets/tutorial/coin.png")
+	drawHammer(win)
+	drawChisel(win)
+	showKeysTutorial(win, ["i", "o", "u", "p"])
 	screen4Text5(win)
 	spaceToContinue(win)
 	win.flip()
 	event.waitKeys()
 
 def screen5(win):
-	text = "The machine produces stars when you press the right sequence of keys. The window will help you figure out these sequences."
+	text = "Great practice, now let’s move to the real game, with a new machine. This new machine makes stars, so you will learn to unlock stars instead of coins. This new machine also has different internal mechanisms, but they can still help you figure out how to unlock stars, as in the practice. Try your best!"
 	textStim = visual.TextStim(
 		win = win,
 		text = text,
