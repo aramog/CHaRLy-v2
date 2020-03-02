@@ -5,7 +5,7 @@ import numpy as np
 
 def get_subj(num):
 	"""Returns the subject object associated with num."""
-	path = "./data/subj" + str(num) + ".json"
+	path = "data/subj" + str(num) + ".json"
 	return Subject(path)
 
 def plot_item_seq(block, axs = plt, xtick_spacing = 4):

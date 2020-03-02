@@ -19,6 +19,7 @@ class Trial:
 		items were unlocked, calls visualization module to print things to the screen."""
 		#first have to update the goal of the machine, so that visualization is consistent
 		self.machine.updateGoal(self.goal)
+		self.machine.blankTask()
 		for i in range(4):
 			#a trial is a run of 4 key presses
 			keyPress, rt = keyHandler(self.machine.keyMap)

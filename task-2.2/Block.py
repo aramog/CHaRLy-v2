@@ -11,41 +11,55 @@ class Block:
 		"""Takes in the following parameters:
 		- machine: defines the context for the task. Gives the rule set and the goal sequence.
 		Also facilitates all the visualization at the trial level."""
-		self.rules = machine.rules
 		self.points = 0
-		self.goalSequence = machine.goalSequence
 		self.lenGoalSeq = lenGoalSeq
 		self.machine = machine
 		#constructs the list of trials to execute based on the goal seq
-		self.trials = self.makeTrials()
+		self.learningTrials, self.transferTrials = self.makeTrials()
 
 	def makeTrials(self):
 		"""Returns a list of trial objects in the order they should be executed by the task."""
-		trials = []
-		for goal in self.goalSequence:
+		#makes the learning trials
+		learningTrials = []
+		for goal in self.machine.learningSequence:
 			for i in range(self.lenGoalSeq):
 				#makes a new trial with this goal seq
-				trial = Trial(self.rules, goal, self.machine)
-				trials.append(trial)
-		return trials
+				trial = Trial(self.machine.learningRules, goal, self.machine)
+				learningTrials.append(trial)
+		#makes the transfer trials
+		transferTrials = []
+		for goal in self.machine.transferSequence:
+			for i in range(self.lenGoalSeq):
+				#makes a new trial with this goal seq
+				trial = Trial(self.machine.transferRules, goal, self.machine)
+				transferTrials.append(trial)
+		return learningTrials, transferTrials
 
 	def runBlock(self):
 		"""Runs all the trials in self.trials."""
 		#manually sets up the first screen
 		self.machine.blankTask()
+		learningData = self.runSubBlock(self.learningTrials)
+		transferData = self.runSubBlock(self.transferTrials)
+		self.data = {"learning": learningData, "transfer": transferData}
+		return self.data
+
+	def runSubBlock(self, trialList):
+		"""Given a list of trials, runs each trial and returns the data output."""
+		self.machine.blankTask()
 		data = []
-		for trial in self.trials:
+		for trial in trialList:
 			unlockedGoal, goal, trialData = trial.runTrial()
 			#checks if we add points
 			if unlockedGoal == goal:
 				self.points += POINT_PER_GOAL
 			#send updated points to the machine
 			self.machine.updatePoints(self.points)
+			data.append(trialData)
 			#draw a new blank task window for the next trial
 			self.machine.blankTask()
-			data.append(trialData)
-		self.data = data
 		return data
+
 
 	def getData(self):
 		return self.data

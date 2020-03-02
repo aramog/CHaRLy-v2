@@ -1,5 +1,6 @@
-from StarMachine import StarMachine
+from StarMachine import *
 from psychopy import visual
+from utils import *
 
 WINDOW_SIZE = [1600, 800]
 
@@ -9,6 +10,13 @@ win = visual.Window(
 	units = "pix"
 )
 win.mouseVisible = False
+data = dict()
+highTransfer = highTransferStarMachine(win, lenGoalSeq = 15)
+lowTransfer = lowTransferStarMachine(win, lenGoalSeq = 15)
 
-sm = StarMachine(win, True)
-sm.block.runBlock()
+highTransfer.block.runBlock()
+data["high transfer"] = highTransfer.block.getData()
+lowTransfer.block.runBlock()
+data["low transfer"] = lowTransfer.block.getData()
+
+makeJson(data, "data/test.json")

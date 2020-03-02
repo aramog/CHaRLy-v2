@@ -1,5 +1,6 @@
 from psychopy import visual
 import time
+import numpy as np
 
 from Machine import Machine
 from Block import Block
@@ -7,35 +8,23 @@ from Block import Block
 
 class StarMachine(Machine):
 	"""Implementation of the abstract machine class for the star machine."""
-	assets = {
-		"machine": "./assets/starMachine.jpg",
-		"goal-1": "./assets/goal-1.png",
-		"goal0": "./assets/goal0.png",
-		"goal1": "./assets/goal1.png",
-		"goal2": "./assets/goal2.png",
-		"item0": "./assets/item0.png",
-		"item1": "./assets/item1.png",
-		"item2": "./assets/item2.png",
-		"key0": "./assets/key0.png",
-		"key1": "./assets/key1.png",
-		"key2": "./assets/key2.png",
-		"key3": "./assets/key3.png"
-	}
-	holdTime = .3
+	holdTime = .6
 	waitTime = .3
-	rules = [
-		{0: (1, 0), 1: (3, 1), 2: (0, 2)},
-		{0: (0, 1), 1: (1, 2), 2: (2, 0)}
-	]
-	goalSequence = [0, 1, 0, 1, 0, 1, 0, 1, 2, 2]
-	keyMap = {"d": 0, "f": 1, "j": 2, "k": 3}
-	#inverseKeyMap = {0: "d", 1: "f", 2: "j", 3: "k"}
-	def __init__(self, window, reactive = True):
+	#TODO: Maybe randomize these orders
+	learningSequence = [0, 1, 2]
+	transferSequence = [0, 1, 2]
+	def __init__(self, window, reactive = True, lenGoalSeq = 25):
 		"""Pretty much just for setting up basic params."""
 		self.window = window
-		self.goal = self.goalSequence[0]
+		self.goal = self.learningSequence[0]
+		self.rules = self.getRules()
+		self.learningRules = self.rules[0]
+		self.transferRules = self.rules[1]
+		self.keyMap = self.randomKeyMap()
+		#randomizes the high level rules, might not need to do this if we change middle images
+		self.learningRules[1], self.transferRules[1] = self.permuteRules(self.learningRules[1], self.transferRules[1])
 		#sets up the block for the machine
-		self.block = Block(self)
+		self.block = Block(self, lenGoalSeq)
 		self.reactive = reactive
 		self.points = 0
 
@@ -79,7 +68,7 @@ class StarMachine(Machine):
 			color = [-1, -1, -1],
 			bold = True)
 		scoreText.draw()
-	
+
 	def drawGoal(self):
 		"""Draws the goal box and star on the screen."""
 		assetString = "goal" + str(self.goal) #so we can index into assets and get the picture
@@ -177,6 +166,77 @@ class StarMachine(Machine):
 	def updateGoal(self, goal):
 		"""Updates the current goal for visualization reasons."""
 		self.goal = goal
+
+	def randomKeyMap(self):
+		"""Returns a mapping between the d, f, j, k keys and the 
+		numerical indicies used in rules. Randomized."""
+		keys = ["d", "f", "j", "k"] #can change to change the input keys to the machine
+		nums = list(range(4))
+		np.random.shuffle(nums) #where we randomize
+		keyMap = dict()
+		for i in range(4):
+			keyMap[keys[i]] = nums[i]
+		return keyMap
+
+	def getRules(self):
+		"""Method implemented by the low and high transfer machines."""
+		pass
+
+	def permuteRules(self, learningRules, transferRules):
+		"""Given a ruleDict mapping numbers to tuples, permutes the keys of the dictionary."""
+		keys = list(learningRules.keys())
+		learningValues = list(learningRules.values())
+		transferValues = list(transferRules.values())
+		np.random.shuffle(keys)
+		learningPerm = dict()
+		transferPerm = dict()
+		for i in range(len(keys)):
+			learningPerm[keys[i]] = learningValues[i]
+			transferPerm[keys[i]] = transferValues[i]
+		return learningPerm, transferPerm
+
+class highTransferStarMachine(StarMachine):
+	assets = {
+		"machine": "./assets/starMachineA.jpg",
+		"goal-1": "./assets/goal-1.png",
+		"goal0": "./assets/goal0.png",
+		"goal1": "./assets/goal1.png",
+		"goal2": "./assets/goal2.png",
+		"item0": "./assets/item0.png",
+		"item1": "./assets/item1.png",
+		"item2": "./assets/item2.png",
+		"key0": "./assets/key0.png",
+		"key1": "./assets/key1.png",
+		"key2": "./assets/key2.png",
+		"key3": "./assets/key3.png"
+	}
+	def getRules(self):
+		middleRules = {0: (0, 1), 1: (2, 3), 2: (1, 2)}
+		learningRules = {0: (0, 1), 1: (1, 2), 2: (2, 0)}
+		transferRules = {0: (0, 1), 1: (0, 2), 2: (2, 1)}
+		return [middleRules, learningRules], [middleRules, transferRules]
+
+class lowTransferStarMachine(StarMachine):
+	assets = {
+		"machine": "./assets/starMachineB.jpg",
+		"goal-1": "./assets/goal-1.png",
+		"goal0": "./assets/goal0.png",
+		"goal1": "./assets/goal1.png",
+		"goal2": "./assets/goal2.png",
+		"item0": "./assets/item0.png",
+		"item1": "./assets/item1.png",
+		"item2": "./assets/item2.png",
+		"key0": "./assets/key0.png",
+		"key1": "./assets/key1.png",
+		"key2": "./assets/key2.png",
+		"key3": "./assets/key3.png"
+	}
+	def getRules(self):
+		highRules = {0: (0, 1), 1: (1, 2), 2: (2, 0)}
+		learningRules = {0: (0, 1), 1: (2, 3), 2: (1, 2)}
+		transferRules = {0: (0, 1), 1: (2, 3), 2: (3, 0)}
+		return [learningRules, highRules], [transferRules, highRules]
+
 
 
 

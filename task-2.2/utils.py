@@ -7,7 +7,7 @@ def keyHandler(keyMap):
 	"""Given a keyMap, returns the number corresponding to the letter pressed.
 	Also returns the scalar reaction time for pressing that key"""
 	keys = list(keyMap.keys())
-	keys.append(1) #we set 1 to be the unique exit key
+	keys.append("1") #we set 1 to be the unique exit key
 	#Now wait for the user input
 	start = time.time()
 	key = event.waitKeys(keyList = keys)
@@ -22,10 +22,10 @@ def keyHandler(keyMap):
 def makeJson(blocks, fileName):
 	"""Takes a list of block objects and saves a 
 	json file with all the data."""
-	res = []
-	for block in blocks:
-		data = block.getData()
-		res.append(data)
-	#saves as json
+	"""res = []
+				for block in blocks:
+					data = block.getData()
+					res.append(data)
+				#saves as json"""
 	with open(fileName, 'w') as outfile:
-		json.dump(res, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+		json.dump(blocks, outfile, sort_keys=True, indent=4, separators=(',', ': '))
