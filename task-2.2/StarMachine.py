@@ -11,8 +11,8 @@ class StarMachine(Machine):
 	holdTime = .6
 	waitTime = .3
 	#TODO: Maybe randomize these orders
-	learningSequence = [0, 1, 2]
-	transferSequence = [0, 1, 2]
+	learningSequence = [0, 1, 2, 3]
+	transferSequence = [0, 1, 0, 1]
 	def __init__(self, window, reactive = True, lenGoalSeq = 25):
 		"""Pretty much just for setting up basic params."""
 		self.window = window
@@ -202,18 +202,20 @@ class highTransferStarMachine(StarMachine):
 		"goal0": "./assets/goal0.png",
 		"goal1": "./assets/goal1.png",
 		"goal2": "./assets/goal2.png",
+		"goal3": "./assets/goal3.png",
 		"item0": "./assets/item0.png",
 		"item1": "./assets/item1.png",
 		"item2": "./assets/item2.png",
+		"item3": "./assets/item3.png",
 		"key0": "./assets/key0.png",
 		"key1": "./assets/key1.png",
 		"key2": "./assets/key2.png",
 		"key3": "./assets/key3.png"
 	}
 	def getRules(self):
-		middleRules = {0: (0, 1), 1: (2, 3), 2: (1, 2)}
-		learningRules = {0: (0, 1), 1: (1, 2), 2: (2, 0)}
-		transferRules = {0: (0, 1), 1: (0, 2), 2: (2, 1)}
+		middleRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
+		learningRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
+		transferRules = {0: (0, 1), 1: (2, 1), 2: (3, 2), 3: (3, 0)}
 		return [middleRules, learningRules], [middleRules, transferRules]
 
 class lowTransferStarMachine(StarMachine):
@@ -223,18 +225,20 @@ class lowTransferStarMachine(StarMachine):
 		"goal0": "./assets/goal0.png",
 		"goal1": "./assets/goal1.png",
 		"goal2": "./assets/goal2.png",
+		"goal3": "./assets/goal3.png",
 		"item0": "./assets/item0.png",
 		"item1": "./assets/item1.png",
 		"item2": "./assets/item2.png",
+		"item3": "./assets/item3.png",
 		"key0": "./assets/key0.png",
 		"key1": "./assets/key1.png",
 		"key2": "./assets/key2.png",
 		"key3": "./assets/key3.png"
 	}
 	def getRules(self):
-		highRules = {0: (0, 1), 1: (1, 2), 2: (2, 0)}
-		learningRules = {0: (0, 1), 1: (2, 3), 2: (1, 2)}
-		transferRules = {0: (0, 1), 1: (2, 3), 2: (3, 0)}
+		highRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
+		learningRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
+		transferRules = {0: (0, 1), 1: (2, 3), 2: (0, 2), 3: (3, 1)}
 		return [learningRules, highRules], [transferRules, highRules]
 
 

@@ -1,4 +1,5 @@
-from utils import keyHandler
+from utils import keyHandler, showBreakScreen
+import time
 
 class Trial:
 	"""Generic trial object. Stores all rules and is workhouse
@@ -81,4 +82,19 @@ class Trial:
 			"unlock": self.unlock
 		}
 		return res
+
+class BreakScreen:
+	"""Like a trial, except it's run trial method only indicates that the goal star is changing."""
+	HOLD_TIME = 3
+	def __init__(self, machine):
+		self.machine = machine
+	
+	def runTrial(self):
+		showBreakScreen(self.machine.window)
+		time.sleep(self.HOLD_TIME)
+		return [-1, -2, dict()]
+
+
+
+
 

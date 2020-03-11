@@ -1,4 +1,5 @@
 from psychopy import event
+from psychopy import visual
 import time
 import json
 
@@ -29,3 +30,14 @@ def makeJson(blocks, fileName):
 				#saves as json"""
 	with open(fileName, 'w') as outfile:
 		json.dump(blocks, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+
+def showBreakScreen(win):
+	"""Given a psychopy window, prints a message on the screen saying that the goal star is now changing."""
+	message = visual.TextStim(
+		win = win,
+		text = "The goal star is now changing!",
+		pos = [0, 200],
+		color = [-1, -1, -1],
+		bold = True)
+	message.draw()
+	win.flip()

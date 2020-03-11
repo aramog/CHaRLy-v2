@@ -11,8 +11,8 @@ win = visual.Window(
 )
 win.mouseVisible = False
 data = dict()
-highTransfer = highTransferStarMachine(win, lenGoalSeq = 15)
-lowTransfer = lowTransferStarMachine(win, lenGoalSeq = 15)
+highTransfer = highTransferStarMachine(win, lenGoalSeq = 10)
+lowTransfer = lowTransferStarMachine(win, lenGoalSeq = 10)
 
 highTransfer.block.runBlock()
 data["high transfer"] = highTransfer.block.getData()

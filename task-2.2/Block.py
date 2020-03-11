@@ -1,4 +1,4 @@
-from Trial import Trial
+from Trial import Trial, BreakScreen
 
 POINT_PER_GOAL = 1
 class Block:
@@ -26,6 +26,8 @@ class Block:
 				#makes a new trial with this goal seq
 				trial = Trial(self.machine.learningRules, goal, self.machine)
 				learningTrials.append(trial)
+			breakScreen = BreakScreen(self.machine)
+			learningTrials.append(breakScreen)
 		#makes the transfer trials
 		transferTrials = []
 		for goal in self.machine.transferSequence:
@@ -33,6 +35,8 @@ class Block:
 				#makes a new trial with this goal seq
 				trial = Trial(self.machine.transferRules, goal, self.machine)
 				transferTrials.append(trial)
+			breakScreen = BreakScreen(self.machine)
+			learningTrials.append(breakScreen)
 		return learningTrials, transferTrials
 
 	def runBlock(self):
@@ -55,7 +59,7 @@ class Block:
 				self.points += POINT_PER_GOAL
 			#send updated points to the machine
 			self.machine.updatePoints(self.points)
-			data.append(trialData)
+			if trialData: data.append(trialData)
 			#draw a new blank task window for the next trial
 			self.machine.blankTask()
 		return data
