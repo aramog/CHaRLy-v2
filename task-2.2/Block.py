@@ -54,7 +54,6 @@ class Block:
 		self.machine.blankTask()
 		data = []
 		for trial in trialList:
-			print(trial)
 			unlockedGoal, goal, trialData = trial.runTrial()
 			#checks if we add points
 			if unlockedGoal == goal:
