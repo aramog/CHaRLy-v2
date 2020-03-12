@@ -1,4 +1,4 @@
-from Trial import Trial, BreakScreen
+from Trial import Trial, SwitchStarScreen
 
 POINT_PER_GOAL = 1
 class Block:
@@ -22,21 +22,22 @@ class Block:
 		#makes the learning trials
 		learningTrials = []
 		for goal in self.machine.learningSequence:
+			breakScreen = SwitchStarScreen(self.machine, goal)
+			learningTrials.append(breakScreen)
 			for i in range(self.lenGoalSeq):
 				#makes a new trial with this goal seq
 				trial = Trial(self.machine.learningRules, goal, self.machine)
 				learningTrials.append(trial)
-			breakScreen = BreakScreen(self.machine)
-			learningTrials.append(breakScreen)
+			
 		#makes the transfer trials
 		transferTrials = []
 		for goal in self.machine.transferSequence:
+			breakScreen = SwitchStarScreen(self.machine, goal)
+			transferTrials.append(breakScreen)
 			for i in range(self.lenGoalSeq):
 				#makes a new trial with this goal seq
 				trial = Trial(self.machine.transferRules, goal, self.machine)
 				transferTrials.append(trial)
-			breakScreen = BreakScreen(self.machine)
-			learningTrials.append(breakScreen)
 		return learningTrials, transferTrials
 
 	def runBlock(self):
@@ -53,6 +54,7 @@ class Block:
 		self.machine.blankTask()
 		data = []
 		for trial in trialList:
+			print(trial)
 			unlockedGoal, goal, trialData = trial.runTrial()
 			#checks if we add points
 			if unlockedGoal == goal:

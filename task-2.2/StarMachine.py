@@ -11,8 +11,10 @@ class StarMachine(Machine):
 	holdTime = .6
 	waitTime = .3
 	#TODO: Maybe randomize these orders
-	learningSequence = [0, 1, 2, 3]
-	transferSequence = [0, 1, 0, 1]
+	learningSequence = [0, 1, 2, 3] *  3
+	base = [1, 2]
+	np.random.shuffle(base)
+	transferSequence = base * 3
 	def __init__(self, window, reactive = True, lenGoalSeq = 25):
 		"""Pretty much just for setting up basic params."""
 		self.window = window
@@ -170,7 +172,7 @@ class StarMachine(Machine):
 	def randomKeyMap(self):
 		"""Returns a mapping between the d, f, j, k keys and the 
 		numerical indicies used in rules. Randomized."""
-		keys = ["d", "f", "j", "k"] #can change to change the input keys to the machine
+		keys = self.keys #can change to change the input keys to the machine
 		nums = list(range(4))
 		np.random.shuffle(nums) #where we randomize
 		keyMap = dict()
@@ -184,6 +186,8 @@ class StarMachine(Machine):
 
 	def permuteRules(self, learningRules, transferRules):
 		"""Given a ruleDict mapping numbers to tuples, permutes the keys of the dictionary."""
+		#TODO: Try with and with out permuting to get a feel for which is easier.
+		return learningRules, transferRules
 		keys = list(learningRules.keys())
 		learningValues = list(learningRules.values())
 		transferValues = list(transferRules.values())
@@ -199,19 +203,21 @@ class highTransferStarMachine(StarMachine):
 	assets = {
 		"machine": "./assets/starMachineA.jpg",
 		"goal-1": "./assets/goal-1.png",
-		"goal0": "./assets/goal0.png",
-		"goal1": "./assets/goal1.png",
-		"goal2": "./assets/goal2.png",
-		"goal3": "./assets/goal3.png",
-		"item0": "./assets/item0.png",
-		"item1": "./assets/item1.png",
-		"item2": "./assets/item2.png",
-		"item3": "./assets/item3.png",
+		"goal0": "./assets/goal0A.png",
+		"goal1": "./assets/goal1A.png",
+		"goal2": "./assets/goal2A.png",
+		"goal3": "./assets/goal3A.png",
+		"item0": "./assets/item0A.png",
+		"item1": "./assets/item1A.png",
+		"item2": "./assets/item2A.png",
+		"item3": "./assets/item3A.png",
 		"key0": "./assets/key0.png",
 		"key1": "./assets/key1.png",
 		"key2": "./assets/key2.png",
 		"key3": "./assets/key3.png"
 	}
+	keys = ["e", "r", "c", "v"]
+	MACHINE_TYPE = "high"
 	def getRules(self):
 		middleRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
 		learningRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
@@ -222,19 +228,21 @@ class lowTransferStarMachine(StarMachine):
 	assets = {
 		"machine": "./assets/starMachineB.jpg",
 		"goal-1": "./assets/goal-1.png",
-		"goal0": "./assets/goal0.png",
-		"goal1": "./assets/goal1.png",
-		"goal2": "./assets/goal2.png",
-		"goal3": "./assets/goal3.png",
-		"item0": "./assets/item0.png",
-		"item1": "./assets/item1.png",
-		"item2": "./assets/item2.png",
-		"item3": "./assets/item3.png",
+		"goal0": "./assets/goal0B.png",
+		"goal1": "./assets/goal1B.png",
+		"goal2": "./assets/goal2B.png",
+		"goal3": "./assets/goal3B.png",
+		"item0": "./assets/item0B.png",
+		"item1": "./assets/item1B.png",
+		"item2": "./assets/item2B.png",
+		"item3": "./assets/item3B.png",
 		"key0": "./assets/key0.png",
 		"key1": "./assets/key1.png",
 		"key2": "./assets/key2.png",
 		"key3": "./assets/key3.png"
 	}
+	keys = ["t", "y", "b", "n"]
+	MACHINE_TYPE = "low"
 	def getRules(self):
 		highRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
 		learningRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}

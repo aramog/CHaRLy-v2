@@ -1,4 +1,4 @@
-from utils import keyHandler, showBreakScreen
+from utils import keyHandler, showStarSwitchScreen
 import time
 
 class Trial:
@@ -83,16 +83,20 @@ class Trial:
 		}
 		return res
 
-class BreakScreen:
+class SwitchStarScreen:
 	"""Like a trial, except it's run trial method only indicates that the goal star is changing."""
-	HOLD_TIME = 3
-	def __init__(self, machine):
+	HOLD_TIME = 2
+	def __init__(self, machine, star):
 		self.machine = machine
+		self.star = star
 	
 	def runTrial(self):
-		showBreakScreen(self.machine.window)
+		showStarSwitchScreen(self.machine.window, self.machine.assets["goal%s"%self.star])
 		time.sleep(self.HOLD_TIME)
 		return [-1, -2, dict()]
+
+	def __repr__(self):
+		return "break trial"
 
 
 

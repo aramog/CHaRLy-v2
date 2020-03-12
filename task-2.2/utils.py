@@ -31,13 +31,30 @@ def makeJson(blocks, fileName):
 	with open(fileName, 'w') as outfile:
 		json.dump(blocks, outfile, sort_keys=True, indent=4, separators=(',', ': '))
 
-def showBreakScreen(win):
+def showStarSwitchScreen(win, starImg):
 	"""Given a psychopy window, prints a message on the screen saying that the goal star is now changing."""
 	message = visual.TextStim(
 		win = win,
-		text = "The goal star is now changing!",
+		text = "The goal star is now:",
 		pos = [0, 200],
 		color = [-1, -1, -1],
 		bold = True)
 	message.draw()
+	star = visual.ImageStim(
+		win = win,
+		image = starImg,
+		pos = [0, 0])
+	star.draw()
 	win.flip()
+
+def showBreakScreen(win, breakTime = 60):
+	"""Given a psychopy window, shows participants a break screen for 1m."""
+	message = visual.TextStim(
+		win = win,
+		text = "Break time! The machine will now switch, so that means all new rules, stars, and parts.",
+		pos = [0, 0],
+		color = [-1, -1, -1],
+		bold = True)
+	message.draw()
+	win.flip()
+	time.sleep(breakTime)
