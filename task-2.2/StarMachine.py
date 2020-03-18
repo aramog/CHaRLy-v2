@@ -22,13 +22,15 @@ class StarMachine(Machine):
 		self.rules = self.getRules()
 		self.learningRules = self.rules[0]
 		self.transferRules = self.rules[1]
-		self.keyMap = self.randomKeyMap()
 		#randomizes the high level rules, might not need to do this if we change middle images
 		self.learningRules[1], self.transferRules[1] = self.permuteRules(self.learningRules[1], self.transferRules[1])
 		#sets up the block for the machine
 		self.block = Block(self, lenGoalSeq)
 		self.reactive = reactive
 		self.points = 0
+
+	def setKeyMap(self):
+		self.keyMap = self.randomKeyMap()
 
 	def showKeys(self, keys):
 		"""Show a low level key press on the screen."""
@@ -216,7 +218,6 @@ class highTransferStarMachine(StarMachine):
 		"key2": "./assets/key2.png",
 		"key3": "./assets/key3.png"
 	}
-	keys = ["e", "r", "c", "v"]
 	MACHINE_TYPE = "high"
 	def getRules(self):
 		middleRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
@@ -241,7 +242,6 @@ class lowTransferStarMachine(StarMachine):
 		"key2": "./assets/key2.png",
 		"key3": "./assets/key3.png"
 	}
-	keys = ["t", "y", "b", "n"]
 	MACHINE_TYPE = "low"
 	def getRules(self):
 		highRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}

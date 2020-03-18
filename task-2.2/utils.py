@@ -1,5 +1,4 @@
-from psychopy import event
-from psychopy import visual
+from psychopy import event, visual
 import time
 import json
 
@@ -58,3 +57,52 @@ def showBreakScreen(win, breakTime = 60):
 	message.draw()
 	win.flip()
 	time.sleep(breakTime)
+
+def showPreMachineScreen(win, machine, holdTime = 20):
+	"""Screen to show the participants before they use a new machine. Will
+	show a picture of the machine and the keys that control it."""
+	message = visual.TextStim(
+		win = win,
+		text = "This is the new machine:",
+		pos = [0, 200],
+		color = [-1, -1, -1],
+		bold = True)
+	message.draw()
+	machineStim = visual.ImageStim(
+		win = win,
+		image = machine.assets["machine"],
+		pos = [0, 0])
+	machineStim.draw()
+	keys = (machine.keys[0], machine.keys[1], machine.keys[2], machine.keys[3])
+	keyStim = visual.TextStim(
+		win = win,
+		text = "It is controlled by keys: %s, %s, %s, %s"%keys,
+		pos = [0, -200],
+		color = [-1, -1, -1],
+		bold = True)
+	keyStim.draw()
+	win.flip()
+	time.sleep(holdTime)
+
+def randomizeMachines(machines, keys1, keys2, subjID):
+	"""Given a subject id mod 4, we have the 4 following cases:
+	0: highTrans/keys1 then lowTrans/keys2
+	1: lowTrans/keys1 then highTrans/keys2
+	2: highTrans/keys2 then lowTrans/keys1
+	3: lowTrans/keys3 then highTrans/keys1"""
+	subjID = subjID % 4
+	#sets the 2 cases for keys and sets the keyMap
+	if subjID == 0 or subjID == 3:
+		machines[0].keys = keys1
+		machines[1].keys = keys2
+	else:
+		machines[1].keys = keys1
+		machines[0].keys = keys2
+	machines[0].setKeyMap()
+	machines[1].setKeyMap()
+	#reorders the machines
+	print(machines[1].keys)
+	if subjID == 0 or subjID == 2:
+		return machines
+	else:
+		return [machines[1], machines[0]]
