@@ -5,7 +5,7 @@ import numpy as np
 from tutorial import runTutorial
 
 WINDOW_SIZE = [1600, 800]
-RUN_TUTORIAL = False
+RUN_TUTORIAL = True
 COLLECT_DATA = True
 lenGoalSeq = 25
 

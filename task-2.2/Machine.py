@@ -1,6 +1,4 @@
-from abc import ABC
-
-class Machine(ABC):
+class Machine:
 	"""This is the base class for a machines in the task that handle all the visualization and user
 	interface for the task. Usage is that it is queried by the task logic modules in order to 
 	print the result of key presses to the screen. Has the following attributes:
