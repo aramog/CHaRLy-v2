@@ -35,20 +35,21 @@ lowTransfer = lowTransferStarMachine(win, lenGoalSeq = lenGoalSeq)
 machines = [highTransfer, lowTransfer]
 #randomizes the order of blocks
 machines = randomizeMachines(machines, keys1, keys2, subjID)
-
+totalUnlocks = 0
 #runs the blocks, with a break in between
 for i in range(len(machines)):
-	#works out the hold time for each machine. Will be more for the second so participants can take a break
-	if i == 0: 
-		holdTime = 10
+	#works out the prescreen for each machine
+	if i == 0:
+		showPreMachineScreen(win,machines[0])
 	else:
-		holdTime = 60 
-	showPreMachineScreen(win, machines[i], holdTime)
+		betweenBlockScreen(win, machines[i - 1], machines[i])
 	machines[i].block.runBlock()
 	if machines[i].MACHINE_TYPE == "high":
 		data["high_transfer"] = machines[i].block.getData()
 	else:
 		data["low_transfer"] = machines[i].block.getData()
+	totalUnlocks += machines[i].points
+showEndScreen(win,totalUnlocks)
 
 if COLLECT_DATA:
 	makeJson(data, "data/subj_%d.json"%subjID)

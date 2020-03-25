@@ -22,8 +22,10 @@ class Block:
 		#makes the learning trials
 		learningTrials = []
 		for goal in self.machine.learningSequence:
-			breakScreen = SwitchStarScreen(self.machine, goal)
-			learningTrials.append(breakScreen)
+			if self.machine.MACHINE_TYPE != "tutorial":
+				#don't like this special case, but oh well, it's easy
+				breakScreen = SwitchStarScreen(self.machine, goal)
+				learningTrials.append(breakScreen)
 			for i in range(self.lenGoalSeq):
 				#makes a new trial with this goal seq
 				trial = Trial(self.machine.learningRules, goal, self.machine)

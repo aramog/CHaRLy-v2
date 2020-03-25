@@ -58,29 +58,69 @@ def showBreakScreen(win, breakTime = 60):
 	win.flip()
 	time.sleep(breakTime)
 
-def showPreMachineScreen(win, machine, holdTime = 20):
+def showPreMachineScreen(win, machine):
 	"""Screen to show the participants before they use a new machine. Will
 	show a picture of the machine and the keys that control it."""
 	message = visual.TextStim(
 		win = win,
 		text = "This is the new machine:",
-		pos = [0, 200],
+		pos = [-300, 200],
 		color = [-1, -1, -1],
 		bold = True)
 	message.draw()
 	machineStim = visual.ImageStim(
 		win = win,
 		image = machine.assets["machine"],
-		pos = [0, 0])
+		pos = [-300, 0])
 	machineStim.draw()
 	keys = (machine.keys[0], machine.keys[1], machine.keys[2], machine.keys[3])
+	if keys[0] == "u":
+		hand = "right"
+	else:
+		hand = "left"
 	keyStim = visual.TextStim(
 		win = win,
-		text = "It is controlled by keys: %s, %s, %s, %s"%keys,
-		pos = [0, -200],
+		text = "It is controlled by keys: %s, %s, %s, %s with the %s hand, as shown below:"%(*keys, hand),
+		pos = [300, 200],
 		color = [-1, -1, -1],
 		bold = True)
 	keyStim.draw()
+	if hand == "right":
+		image = "./assets/rightHand.png"
+	else:
+		image = "./assets/leftHand.png"
+	handStim = visual.ImageStim(
+		win = win,
+		image = image,
+		pos = [300, 0])
+	handStim.size = [handStim.size[0] * .1, handStim.size[1] * .1]
+	handStim.draw()
+	continueStim = visual.TextStim(
+		win = win,
+		text = "[Press any key when you're ready]",
+		pos = [0, -300],
+		color = [-1, -1, -1])
+	continueStim.draw()
+	win.flip()
+	event.waitKeys()
+
+def showPostMachineScreen(win, machine, holdTime = 10):
+	"""Screen to show after they have used a machine. Only used if there is another machine coming."""
+	pointStim = visual.TextStim(
+		win = win,
+		text = "Great job! You unlocked %d stars using the last machine."%machine.points,
+		pos = [0, 100],
+		color = [-1, -1, -1],
+		bold = True)
+	pointStim.draw()
+
+	breakStim = visual.TextStim(
+		win = win,
+		text = "You will now have a 1 minute break, after which you'll be able to control a new machine.",
+		pos = [0, -100],
+		color = [-1, -1, -1],
+		bold = True)
+	breakStim.draw()
 	win.flip()
 	time.sleep(holdTime)
 
@@ -106,3 +146,38 @@ def randomizeMachines(machines, keys1, keys2, subjID):
 		return machines
 	else:
 		return [machines[1], machines[0]]
+
+def betweenBlockScreen(win, machine1, machine2):
+	"""Shows the following 3 screens in between blocks of the task:
+	screen1: says that the block is now over and how many stars unlocked.
+	screen2: break screen
+	screen3: premachine screen"""
+	#screen1
+	showPostMachineScreen(win, machine1, 10)
+	#screen2
+	breakStim = visual.TextStim(
+		win = win,
+		text = "1 minute break.",
+		pos = [0, 0],
+		color = [-1, -1, -1],
+		bold = True)
+	breakStim.draw()
+	win.flip()
+	time.sleep(60)
+	#screen3
+	showPreMachineScreen(win, machine2)
+
+def showEndScreen(win, totalPoints):
+	text = "Great job! You unlocked a total of %d stars. \n \n Thank you for participating and have a nice day!"%totalPoints
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [0, 0],
+		color = [-1, -1, -1],
+		bold = True,
+		height = 30)
+	textStim.draw()
+	win.flip()
+	time.sleep(30)
+
+

@@ -118,7 +118,6 @@ def drawHammer(win):
 			win = win,
 			image = "./assets/tutorial/hammer.png",
 			pos = [-60, 30])
-	hammer.size = [hammer.size[0] * .1, hammer.size[1] * .1]
 	hammer.draw()
 
 def drawChisel(win):
@@ -126,7 +125,6 @@ def drawChisel(win):
 			win = win,
 			image = "./assets/tutorial/chisel.png",
 			pos = [60, 30])
-	chisel.size = [chisel.size[0] * .5, chisel.size[1] * .5]
 	chisel.draw()
 
 def highlightStar(win, img):
@@ -215,7 +213,7 @@ def showKeysTutorial(win, keys):
 	keys = keys.copy()
 	if (keys and type(keys[0]) == int):
 		#need to convert to letters
-		keyMap = {1: "u", 2: "i", 3: "o", 4: "p"}
+		keyMap = {1: "d", 2: "f", 3: "j", 4: "k"}
 		for i in range(len(keys)):
 			keys[i] = keyMap[keys[i]]
 	keyStims = []
