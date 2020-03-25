@@ -1,4 +1,6 @@
 from Trial import Trial, SwitchStarScreen
+from utils import makeJson
+
 
 POINT_PER_GOAL = 1
 class Block:
@@ -47,8 +49,11 @@ class Block:
 		#manually sets up the first screen
 		self.machine.blankTask()
 		learningData = self.runSubBlock(self.learningTrials)
+		self.data = {"learning": learningData}
+		self.saveData()
 		transferData = self.runSubBlock(self.transferTrials)
 		self.data = {"learning": learningData, "transfer": transferData}
+		self.saveData()
 		return self.data
 
 	def runSubBlock(self, trialList):
@@ -70,3 +75,13 @@ class Block:
 
 	def getData(self):
 		return self.data
+
+	def saveData(self):
+		if self.machine.MACHINE_TYPE == "tutorial":
+			return 0 #ugh more special cases
+		try:
+			data = {"past": self.machine.pastData, self.machine.MACHINE_TYPE: self.getData()}
+		except:
+			data = self.getData()
+		makeJson(data, "data/subj_%d.json"%self.machine.subjID)
+

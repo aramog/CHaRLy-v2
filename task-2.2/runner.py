@@ -38,6 +38,7 @@ machines = randomizeMachines(machines, keys1, keys2, subjID)
 totalUnlocks = 0
 #runs the blocks, with a break in between
 for i in range(len(machines)):
+	machines[i].subjID = subjID
 	#works out the prescreen for each machine
 	if i == 0:
 		showPreMachineScreen(win,machines[0])
@@ -48,6 +49,8 @@ for i in range(len(machines)):
 		data["high_transfer"] = machines[i].block.getData()
 	else:
 		data["low_transfer"] = machines[i].block.getData()
+	if i == 0:
+		machines[i + 1].pastData = data
 	totalUnlocks += machines[i].points
 showEndScreen(win,totalUnlocks)
 
