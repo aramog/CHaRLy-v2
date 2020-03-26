@@ -3,6 +3,7 @@ from psychopy import visual
 from utils import *
 import numpy as np
 from tutorial import runTutorial
+import time
 
 WINDOW_SIZE = [1600, 800]
 RUN_TUTORIAL = True
@@ -24,7 +25,7 @@ win.mouseVisible = False
 #runs the tutorial
 if RUN_TUTORIAL:
 	runTutorial(win)
-
+startTime = time.time() #records the total time it takes to finish the task
 #defines the 2 key sets that the machines will use
 keys1 = ["q", "w", "e", "r"]
 keys2 = ["u", "i", "o", "p"]
@@ -53,6 +54,9 @@ for i in range(len(machines)):
 		machines[i + 1].pastData = data
 	totalUnlocks += machines[i].points
 showEndScreen(win,totalUnlocks)
+
+totalTime = time.time() - startTIme
+data["total time"] = totalTime
 
 if COLLECT_DATA:
 	makeJson(data, "data/subj_%d.json"%subjID)
