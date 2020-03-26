@@ -2,6 +2,8 @@ from psychopy import event, visual
 import time
 import json
 
+MAX_WAIT_TIME = 5
+
 
 def keyHandler(keyMap):
 	"""Given a keyMap, returns the number corresponding to the letter pressed.
@@ -10,7 +12,9 @@ def keyHandler(keyMap):
 	keys.append("1") #we set 1 to be the unique exit key
 	#Now wait for the user input
 	start = time.time()
-	key = event.waitKeys(keyList = keys)
+	key = event.waitKeys(MAX_WAIT_TIME, keyList = keys)
+	if not key:
+		return -1, -1
 	rt = time.time() - start
 	if (key[0] in keyMap):
 		return keyMap[key[0]], rt #gets the number corresponding to this key
@@ -179,5 +183,19 @@ def showEndScreen(win, totalPoints):
 	textStim.draw()
 	win.flip()
 	time.sleep(30)
+
+def showSlowScreen(win):
+	"""Shows a screen when they take too long to respond."""
+	text = "You took too long to respond that last trial. Please be faster in the future. \n \n Press any key when you're ready to start again"
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [0, 0],
+		color = [-1, -1, -1],
+		bold = True,
+		height = 30)
+	textStim.draw()
+	win.flip()
+	event.waitKeys()
 
 

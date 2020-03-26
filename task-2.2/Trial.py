@@ -1,4 +1,4 @@
-from utils import keyHandler, showStarSwitchScreen
+from utils import keyHandler, showStarSwitchScreen, showSlowScreen
 import time
 
 class Trial:
@@ -24,6 +24,10 @@ class Trial:
 		for i in range(4):
 			#a trial is a run of 4 key presses
 			keyPress, rt = keyHandler(self.machine.keyMap)
+			if rt == -1:
+				#means they didn't press a key in time.
+				showSlowScreen(self.machine.window)
+				return -1, -2, -3
 			self.keys.append(keyPress)
 			#shows the key press on the screen
 			self.reactionTimes.append(rt)
