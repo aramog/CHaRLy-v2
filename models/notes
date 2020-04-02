@@ -1,0 +1,14 @@
+Running notes file as I build the modeling code for the charly task.
+
+Just started on this by setting up some abstract classes and the agent environment interaction loop.
+
+Think a good place to start is to implement the charly task using this environment API.
+For starters, this means working out a logical board representation for the game. This will be necessary for
+both the agent to compute values and for the environment to update itself.
+Want to include all the information that would be visually presented to participants, which includes:
+- previous key strokes.
+- middle layer items that appear.
+- whether a star was unlocked.
+- whether points were recieved.
+
+Why not just make a super simple data structure that has all this info? Good starting point at least.

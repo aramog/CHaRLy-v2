@@ -1,65 +1,31 @@
-"""
-Several base clases to serve as the template for more complex agents.
-"""
-
-from util import *
+import numpy as np
 
 class Agent:
-	"""
-	An agent is an object with a getAction(state) method.
-	"""
-	def __init__(self, index=0):
-		self.index = index
+	#base class for an agent, defines what methods should be implemented.
+	def __init__(self, action_space = 4):
+		self.action_space = list(range(4)) #how many possible key presses there are
 
-	def getAction(self, state):
-		"""
-		Given a game state, the agent will return an action.
-		"""
-		raiseNotDefined()
+	def observe(self, state, reward):
+		"""After taking an action, the environment will return a new state 
+		and reward. This function integrates that information into the agent."""
+		pass
 
-class ValueEstimationAgent(Agent):
-	"""
-	Abstraction for any agent that computes action-value (q) estimates.
+	def policy(self):
+		"""After an observation, the agent's policy will return the action 
+		in current state. Note that the policy function assumes a state attribute."""
+		pass
 
-	V(s) = max_{a in actions} Q(s, a)
-	policy(s) = argmax_{a in actions} Q(s, a)
-	"""
-	def __init__(self, alpha=1.0, epsilon=.05, gamma=.8):
-		"""
-		alpha - learning rate
-		epsilon - exploration rate
-		gamma - discount factor
-		"""
-		self.alpha = alpha
-		self.epsilon = epsilon
-		self.discount = gamma
+	def reset(self, inital_state):
+		"""Given a starting state, the agent resets all its attributes."""
+		self.curr_state = inital_state
+		self.reset_values()
 
-	def getQValue(self, state, action):
-		"""
-		Returns Q(state, action)
-		"""
-		raiseNotDefined()
+	def reset_values(self):
+		"""Depending on the value representations of the agent in question,
+		this function will reset them to start a fresh agent."""
+		pass
 
-	def getValue(self, state):
-		"""
-		Returns max_{a in actions} Q(s, a)
-		"""
-		raiseNotDefined()
-
-	def getPolicy(self, state):
-		"""
-		Returns argmax_{a in actions} Q(s, a)
-		"""
-		raiseNotDefined()
-
-	def getAction(self, state):
-		"""
-		Takes a greedy action with prob 1 - epsilon. Otherwise
-		will return a random action.
-		"""
-		raiseNotDefined()
-
-class ReinforcementAgent(ValueEstimationAgent):
-	"""TODO: need to add the ability to oberve state transitions and update q values"""
-
-	
+class RandomAgent(Agent):
+	#simplest agent possible, just to test things out
+	def policy(self):
+		return np.random.choice(self.action_space)
