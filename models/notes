@@ -12,3 +12,5 @@ Want to include all the information that would be visually presented to particip
 - whether points were recieved.
 
 Why not just make a super simple data structure that has all this info? Good starting point at least.
+
+Ok made a bunch of progress since the last note. Implemented both the task and a q learning agent.
