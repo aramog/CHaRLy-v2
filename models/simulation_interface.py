@@ -1,10 +1,12 @@
 """File to store the agent environment interaction loop."""
 from flat_agent import *
+from agent import RandomAgent
 from env import Charly
 from task_logic import *
 
+#agent = FlatAgentPseudoReward()
 agent = FlatAgent()
-env = Charly(*task_params(transfer = "high"), seqLength = 300)
+env = Charly(*task_params(transfer = "none"), seqLength = 2000)
 #initializes both the agent and environment
 inital_state = env.reset()
 agent.reset(inital_state)
@@ -13,15 +15,14 @@ rewards = []
 trial = 0
 #runs the agent environment interaction loop
 while not env.finished():
-	#agent first takes an action
-	action = agent.policy()
-	#environment reacts to action
-	next_state, reward = env.step(action)
-	#agent observes that reaction
-	agent.observe(next_state, reward)
-	#TODO: collects all the data from this trial
-	trial += 1
-	if trial % 4 == 0:
-		#means we've gone through 4 key presses, so record reward
-		rewards.append(reward)
-		
+	#resets the internal state
+	state = env.blank_state()
+	agent.update_state(state)
+	for _ in range(4):
+		#agent first takes an action
+		action = agent.policy()
+		#environment reacts to action
+		next_state, reward = env.step(action)
+		#agent observes that reaction
+		agent.observe(next_state, reward)
+	rewards.append(reward)

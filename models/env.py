@@ -50,19 +50,17 @@ class Charly(Environment):
 			reward = 1
 		else:
 			reward = 0
-		#returns a new frame if the current one is over
-		if len(updated_state.keys) == 4:
-			#means we have no more keys to press in this state
-			self.curr_trial += 1 #only increment trail num after 4 presses
-			new_state = GameState()
-			new_state.goalStar = self.starSequence[self.curr_trial]
-			self.state = new_state
-			return new_state, reward
-		else:
-			#means the updated_state still has more keys to go
-			new_state = updated_state
-			self.state = new_state
-			return new_state, reward
+		self.state = updated_state
+		return updated_state, reward
+
+	def blank_state(self):
+		"""Called after an episode of 4 key presses. Sets the interal state
+		to a blank game state and increments the curr_trial counter."""
+		self.curr_trial += 1
+		new_state = GameState()
+		new_state.goalStar = self.starSequence[self.curr_trial]
+		self.state = new_state
+		return self.state
 
 	def finished(self):
 		"""Returns true if the task is over."""

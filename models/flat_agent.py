@@ -30,6 +30,7 @@ class FlatAgent(Agent):
 			prev_value = 0
 		new_state_value = self.get_best(state, what = "value")
 		#computes the parts of the update rule
+		#TODO: treat the fourth trial as an absorbing state
 		RPE = reward + self.gamma * new_state_value - prev_value
 		#does the update
 		self.q_table[(prev_state, prev_action)] = prev_value + self.epsilon * RPE
@@ -64,4 +65,24 @@ class FlatAgent(Agent):
 	def reset(self, initial_state):
 		Agent.reset(self, initial_state)
 		self.q_table = dict()
+
+class FlatAgentPseudoReward(FlatAgent):
+	"""Same as the flat agent, but gives itself a pseudo reward when an item is seen."""
+	PSEUDO_REWARD = .7
+	def observe(self, state, reward):
+		#checks if we need to add a pseudo reward
+		if len(state.keys) % 2 == 0:
+			#means we need to check for new items
+			if len(state.items) > 0 and len(state.keys) == 2:
+				#means we unlocked an item, so add a reward
+				reward = reward + self.PSEUDO_REWARD
+			elif len(state.items) == 2 and len(state.keys) == 4:
+				reward = reward + self.PSEUDO_REWARD
+		FlatAgent.observe(self, state, reward)
+
+
+
+
+
+
 

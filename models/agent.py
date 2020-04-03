@@ -18,7 +18,8 @@ class Agent:
 		single_keys = set([(key) for key in self.action_space])
 		double_keys = set(product(single_keys, repeat = 2))
 		triple_keys = set(product(single_keys, repeat = 3))
-		all_keys = {-1}.union(single_keys, double_keys, triple_keys) #{-1} is when no keys are on screen
+		quad_keys = set(product(single_keys, repeat = 4))
+		all_keys = {-1}.union(single_keys, double_keys, triple_keys, quad_keys) #{-1} is when no keys are on screen
 		#all possible items that could be on screen
 		single_items = set([(item) for item in range(self.NUM_ITEMS)])
 		double_items = set(product(single_items, repeat = 2))
@@ -56,6 +57,10 @@ class Agent:
 		in current state. Note that the policy function assumes a state attribute."""
 		pass
 
+	def update_state(self, state):
+		"""Will just update the internal state to a given state."""
+		self.curr_state = self.featurize(state)
+
 	def reset(self, inital_state):
 		"""Given a starting state, the agent resets all its attributes."""
 		self.curr_state = self.featurize(inital_state)
@@ -66,4 +71,3 @@ class RandomAgent(Agent):
 		return np.random.choice(self.action_space)
 
 
-		

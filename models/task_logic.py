@@ -14,11 +14,15 @@ def task_params(transfer = "high"):
 		learningRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
 		transferRules = {0: (0, 1), 1: (2, 1), 2: (3, 2), 3: (3, 0)}
 		rules = [middleRules, learningRules], [middleRules, transferRules]
-	else:
+	elif transfer == "low":
 		highRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
 		learningRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
 		transferRules = {0: (0, 1), 1: (2, 3), 2: (0, 2), 3: (3, 1)}
 		rules = [learningRules, highRules], [transferRules, highRules]
+	else:
+		highRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
+		learningRules = {0: (0, 1), 1: (2, 3), 2: (1, 2), 3: (3, 0)}
+		rules = [learningRules, highRules], [learningRules, highRules]
 	return rules, transferIdx, totalSeq
 
 def update_game_state(curr_state, rules, action):
@@ -60,3 +64,4 @@ def update_game_state(curr_state, rules, action):
 	#next checks if a star was unlocked
 	new_state.unlockedStar = checkHighSeq(new_state.items)
 	return new_state
+
