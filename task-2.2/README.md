@@ -8,8 +8,24 @@ What follows will be instructions for running this task on your local machine. N
 
 
 ```
+git clone https://github.com/amoghaddassi/CHaRLy-v2.git
+cd CHaRLy-v2
 pip install -r stable-req.txt
 python runner.py
+```
+
+### Step 0: Getting this repository on your local computer
+
+Navigate to a folder on your computer where you'd like to keep these files (e.g. desktop) and run the following command:
+
+```
+git clone https://github.com/amoghaddassi/CHaRLy-v2.git
+```
+
+To enter this folder on the command line, run:
+
+```
+cd CHaRLy-v2
 ```
 
 ### Step 1: Setting up a python environment

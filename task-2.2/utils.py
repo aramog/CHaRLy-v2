@@ -21,7 +21,7 @@ def keyHandler(keyMap):
 	elif (key[0] == "1"):
 		#TODO: instead of exiting here, should send an exit signal up to task so that it can save data
 		exit("Exit key pressed")
-	return -1, rt
+	return -1, -1 #returns a -1 reaction time if max is hit
 
 def makeJson(blocks, fileName):
 	"""Takes a list of block objects and saves a 

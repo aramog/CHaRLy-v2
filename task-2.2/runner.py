@@ -9,7 +9,7 @@ WINDOW_SIZE = [1600, 800]
 RUN_TUTORIAL = True
 COLLECT_DATA = True
 FULL_SCREEN = True
-lenGoalSeq = 25
+lenGoalSeq = 1
 
 subjID = np.random.choice(range(4))
 

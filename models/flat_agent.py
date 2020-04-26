@@ -68,7 +68,10 @@ class FlatAgent(Agent):
 
 class FlatAgentPseudoReward(FlatAgent):
 	"""Same as the flat agent, but gives itself a pseudo reward when an item is seen."""
-	PSEUDO_REWARD = .7
+	def __init__(self, pseudo_reward, alpha=.1, epsilon = .1, gamma = .8):
+		self.PSEUDO_REWARD = pseudo_reward
+		FlatAgent.__init__(self, alpha, epsilon, gamma)
+
 	def observe(self, state, reward):
 		#checks if we need to add a pseudo reward
 		if len(state.keys) % 2 == 0:
@@ -79,10 +82,4 @@ class FlatAgentPseudoReward(FlatAgent):
 			elif len(state.items) == 2 and len(state.keys) == 4:
 				reward = reward + self.PSEUDO_REWARD
 		FlatAgent.observe(self, state, reward)
-
-
-
-
-
-
 

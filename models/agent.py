@@ -26,8 +26,9 @@ class Agent:
 		all_items = {-1}.union(single_items, double_items)
 		#all possible stars that could be a goal
 		stars = set([(star) for star in range(self.NUM_STARS)])
+		unlocked_stars = {-1}.union(stars.copy())
 		#returns the product set
-		return set(product(all_keys, all_items, stars))
+		return set(product(all_keys, all_items, stars, unlocked_stars))
 
 	def featurize(self, state):
 		"""Returns the tuple style feature representation of the state."""
@@ -44,8 +45,9 @@ class Agent:
 			items = state.items[0]
 		else:
 			items = (-1)
-		star = state.goalStar
-		return (keys, items, star)
+		goal_star = state.goalStar
+		unlocked_star = state.unlockedStar
+		return (keys, items, goal_star, unlocked_star)
 
 	def observe(self, state, reward):
 		"""After taking an action, the environment will return a new state 
