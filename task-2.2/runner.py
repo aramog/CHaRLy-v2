@@ -9,10 +9,9 @@ WINDOW_SIZE = [1600, 800]
 RUN_TUTORIAL = True
 COLLECT_DATA = True
 FULL_SCREEN = True
-lenGoalSeq = 1
+lenGoalSeq = 25
 
-subjID = np.random.choice(range(4))
-
+subjID = input("Subject ID? ")
 #puts this into a function to be called from the main.py file
 def run_task():
 	win = visual.Window(
@@ -25,7 +24,6 @@ def run_task():
 	#runs the tutorial
 	if RUN_TUTORIAL:
 		runTutorial(win)
-	startTime = time.time() #records the total time it takes to finish the task
 	#defines the 2 key sets that the machines will use
 	keys1 = ["q", "w", "e", "r"]
 	keys2 = ["u", "i", "o", "p"]
@@ -37,6 +35,8 @@ def run_task():
 	#randomizes the order of blocks
 	machines = randomizeMachines(machines, keys1, keys2, subjID)
 	totalUnlocks = 0
+	#records the start time
+	starTime = time.time()
 	#runs the blocks, with a break in between
 	for i in range(len(machines)):
 		machines[i].subjID = subjID
@@ -55,7 +55,7 @@ def run_task():
 		totalUnlocks += machines[i].points
 	showEndScreen(win,totalUnlocks)
 
-	totalTime = time.time() - startTIme
+	totalTime = time.time() - startTime
 	data["total time"] = totalTime
 
 	if COLLECT_DATA:

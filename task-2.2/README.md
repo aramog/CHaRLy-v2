@@ -9,7 +9,7 @@ What follows will be instructions for running this task on your local machine. N
 
 ```
 git clone https://github.com/amoghaddassi/CHaRLy-v2.git
-cd CHaRLy-v2
+cd CHaRLy-v2/task-2.2
 pip install -r stable-req.txt
 python runner.py
 ```

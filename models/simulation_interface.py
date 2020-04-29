@@ -35,8 +35,8 @@ def main(seqLength, agent = FlatAgent(), env = None):
 
 if __name__ == "__main__":
 	params = task_params(transfer = "none")
-	env = Charly(*params, seqLength = 1000)
+	env = Charly(*params, seqLength = 2500)
 	rules = params[0]
 	middle_seqs = rules[0][0]
-	hrl_agent = FlatAgent()
-	r, a  = main(0, hrl_agent, env)
+	hrl_agent = HRL_Agent(middle_seqs)
+	r, a  = main(0, hrl_agent,env = env)

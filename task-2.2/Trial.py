@@ -83,7 +83,8 @@ class Trial:
 			"key_press": self.keys,
 			"reaction_times": self.reactionTimes, 
 			"star": self.goal,
-			"unlock": self.unlock
+			"unlock": self.unlock,
+			"unlocked_items": self.items
 		}
 		return res
 
