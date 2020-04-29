@@ -12,6 +12,7 @@ FULL_SCREEN = True
 lenGoalSeq = 25
 
 subjID = input("Subject ID? ")
+subjID = int(subjID)
 #puts this into a function to be called from the main.py file
 def run_task():
 	win = visual.Window(
