@@ -15,12 +15,18 @@ subjID = input("Subject ID? ")
 subjID = int(subjID)
 #puts this into a function to be called from the main.py file
 def run_task():
-	win = visual.Window(
-		size = WINDOW_SIZE,
-		color = [1, 1, 1],
-		units = "pix",
-		fullscr = FULL_SCREEN
-	)
+	if FULL_SCREEN:
+		win = visual.Window(
+			color = [1, 1, 1],
+			units = "pix",
+			fullscr = FULL_SCREEN
+		)
+	else:
+		win = visual.Window(
+			size = WINDOW_SIZE,
+			color = [1, 1, 1],
+			units = "pix"
+		)
 	win.mouseVisible = False
 	#runs the tutorial
 	if RUN_TUTORIAL:
