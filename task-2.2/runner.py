@@ -43,7 +43,7 @@ def run_task():
 	machines = randomizeMachines(machines, keys1, keys2, subjID)
 	totalUnlocks = 0
 	#records the start time
-	starTime = time.time()
+	startTime = time.time()
 	#runs the blocks, with a break in between
 	for i in range(len(machines)):
 		machines[i].subjID = subjID

@@ -11,7 +11,7 @@ class StarMachine(Machine):
 	holdTime = .6
 	waitTime = .3
 	#TODO: Maybe randomize these orders
-	learningSequence = [0, 1, 2, 3] *  3
+	learningSequence = [0, 1, 2, 3] * 3
 	base = [1, 2]
 	np.random.shuffle(base)
 	transferSequence = base * 3

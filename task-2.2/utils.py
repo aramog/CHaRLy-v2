@@ -181,8 +181,18 @@ def showEndScreen(win, totalPoints):
 		bold = True,
 		height = 30)
 	textStim.draw()
+
+	text = "Press any key to exit the task"
+	textStim = visual.TextStim(
+		win = win,
+		text = text,
+		pos = [0, -300],
+		color = [-1, -1, -1],
+		bold = True,
+		height = 20)
+	textStim.draw()
 	win.flip()
-	time.sleep(30)
+	event.waitKeys()
 
 def showSlowScreen(win):
 	"""Shows a screen when they take too long to respond."""

@@ -25,7 +25,7 @@ git clone https://github.com/amoghaddassi/CHaRLy-v2.git
 To enter this folder on the command line, run:
 
 ```
-cd CHaRLy-v2
+cd CHaRLy-v2/task-2.2
 ```
 
 ### Step 1: Setting up a python environment
