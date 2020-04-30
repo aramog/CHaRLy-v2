@@ -12,6 +12,7 @@ class Trial:
 		#sets up variables that will be used throughout execution of a trial
 		self.keys = []
 		self.items = []
+		self.unlockedItems = [] # for data collection
 		self.reactionTimes = []
 		self.unlock = -1
 
@@ -35,8 +36,7 @@ class Trial:
 			if unlockedItem >= 0:
 				#means we unlocked something
 				self.items.append(unlockedItem)
-			else:
-				self.items.append(-1) #means we didn't unlock anything
+			self.unlockedItems.append(unlockedItem)
 			#visualizes the current state
 			if i < 3:
 				#don't do the last state, that is handled below
@@ -86,7 +86,7 @@ class Trial:
 			"reaction_times": self.reactionTimes, 
 			"star": self.goal,
 			"unlock": self.unlock,
-			"unlocked_items": self.items
+			"unlocked_items": self.unlockedItems
 		}
 		return res
 
