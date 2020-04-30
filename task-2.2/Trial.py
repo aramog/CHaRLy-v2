@@ -35,6 +35,8 @@ class Trial:
 			if unlockedItem >= 0:
 				#means we unlocked something
 				self.items.append(unlockedItem)
+			else:
+				self.items.append(-1) #means we didn't unlock anything
 			#visualizes the current state
 			if i < 3:
 				#don't do the last state, that is handled below
